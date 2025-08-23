@@ -29,7 +29,6 @@ export default class DHFeature extends BaseDataItem {
                 nullable: true,
                 initial: null
             }),
-            multiclassOrigin: new fields.BooleanField({ initial: false }),
             identifier: new fields.StringField()
         };
     }
