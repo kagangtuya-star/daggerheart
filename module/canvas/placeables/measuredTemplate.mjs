@@ -11,19 +11,19 @@ export default class DhMeasuredTemplate extends foundry.canvas.placeables.Measur
             if (splitRulerText.length > 0) {
                 const rulerValue = Number(splitRulerText[0]);
                 const result = DhMeasuredTemplate.getRangeLabels(rulerValue, rangeMeasurementSettings);
-                this.ruler.text = result.distance + (result.units ? (' ' + result.units) : '');
+                this.ruler.text = result.distance + (result.units ? ' ' + result.units : '');
             }
         }
     }
 
     static getRangeLabels(distanceValue, settings) {
-        let result = { distance: distanceValue, units: '' }
+        let result = { distance: distanceValue, units: '' };
         const rangeMeasurementOverride = canvas.scene.flags.daggerheart?.rangeMeasurementOverride;
 
         if (rangeMeasurementOverride === true) {
             result.distance = distanceValue;
             result.units = canvas.scene?.grid?.units;
-            return result
+            return result;
         }
         if (distanceValue <= settings.melee) {
             result.distance = game.i18n.localize('DAGGERHEART.CONFIG.Range.melee.name');
