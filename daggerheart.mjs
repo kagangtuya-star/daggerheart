@@ -1,5 +1,6 @@
 import { SYSTEM } from './module/config/system.mjs';
 import * as applications from './module/applications/_module.mjs';
+import * as data from './module/data/_module.mjs';
 import * as models from './module/data/_module.mjs';
 import * as documents from './module/documents/_module.mjs';
 import * as dice from './module/dice/_module.mjs';
@@ -26,6 +27,7 @@ Hooks.once('init', () => {
     CONFIG.DH = SYSTEM;
     game.system.api = {
         applications,
+        data,
         models,
         documents,
         dice,
