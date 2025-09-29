@@ -8,6 +8,18 @@ export const encounterCountdown = {
     position: 'countdown-encounter-position'
 };
 
+export const compendiumBrowserDefault = {
+    position: 'compendium-browser-default-position'
+};
+
+export const compendiumBrowserNoFolder = {
+    position: 'compendium-browser-no-folder-position'
+};
+
+export const compendiumBrowserLite = {
+    position: 'compendium-browser-lite-position'
+};
+
 export const itemAttachmentSource = 'attachmentSource';
 
 export const userFlags = {
