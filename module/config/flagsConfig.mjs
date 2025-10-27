@@ -23,5 +23,6 @@ export const compendiumBrowserLite = {
 export const itemAttachmentSource = 'attachmentSource';
 
 export const userFlags = {
-    welcomeMessage: 'welcome-message'
+    welcomeMessage: 'welcome-message',
+    countdownMode: 'countdown-mode'
 };
