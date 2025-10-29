@@ -2307,6 +2307,9 @@
                             "label": "Apply Effects",
                             "hint": "Automatically apply effects. Targets must be selected before the action is made and Reaction Roll Automation must be different than Never. Bypass users permissions."
                         }
+                    },
+                    "summaryMessages": {
+                        "label": "Summary Messages"
                     }
                 },
                 "defeated": {
@@ -2428,6 +2431,7 @@
                 "action": {
                     "title": "Action"
                 },
+                "appliedTo": "Applied To",
                 "applyEffect": {
                     "title": "Apply Effects - {name}"
                 },
@@ -2436,6 +2440,11 @@
                     "rollDamage": "Roll Damage",
                     "rollHealing": "Roll Healing",
                     "applyEffect": "Apply Effects"
+                },
+                "clearResource": "Clear {quantity} {resource}",
+                "damageSummary": {
+                    "title": "Damage Applied",
+                    "healingTitle": "Healing Applied"
                 },
                 "damageRoll": {
                     "title": "Damage - {damage}",
@@ -2458,12 +2467,16 @@
                 "dualityRoll": {
                     "abilityCheckTitle": "{ability} Check"
                 },
+                "effectSummary": {
+                    "title": "Effects Applied"
+                },
                 "featureTitle": "Class Feature",
                 "healingRoll": {
                     "title": "Heal - {damage}",
                     "heal": "Heal",
                     "applyHealing": "Apply Healing"
                 },
+                "markResource": "Mark {quantity} {resource}",
                 "refreshMessage": {
                     "title": "Feature Refresh",
                     "header": "Refreshed"
