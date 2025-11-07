@@ -26,6 +26,10 @@ export default class DhpEnvironment extends DHBaseActorSheet {
 
     /**@override */
     static PARTS = {
+        limited: {
+            template: 'systems/daggerheart/templates/sheets/actors/environment/limited.hbs',
+            scrollable: ['.limited-container']
+        },
         header: { template: 'systems/daggerheart/templates/sheets/actors/environment/header.hbs' },
         features: {
             template: 'systems/daggerheart/templates/sheets/actors/environment/features.hbs',
@@ -46,6 +50,18 @@ export default class DhpEnvironment extends DHBaseActorSheet {
             labelPrefix: 'DAGGERHEART.GENERAL.Tabs'
         }
     };
+
+    /**  @inheritdoc */
+    _initializeApplicationOptions(options) {
+        const applicationOptions = super._initializeApplicationOptions(options);
+
+        if (applicationOptions.document.testUserPermission(game.user, 'LIMITED', { exact: true })) {
+            applicationOptions.position.width = 360;
+            applicationOptions.position.height = 'auto';
+        }
+
+        return applicationOptions;
+    }
 
     /**@inheritdoc */
     async _preparePartContext(partId, context, options) {
