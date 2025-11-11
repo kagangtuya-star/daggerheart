@@ -1,4 +1,4 @@
-import { emitAsGM, GMUpdateEvent } from '../systemRegistration/socket.mjs';
+import { emitAsGM, GMUpdateEvent, RefreshType, socketEvent } from '../systemRegistration/socket.mjs';
 
 export default class DhpChatMessage extends foundry.documents.ChatMessage {
     targetHook = null;
@@ -16,7 +16,7 @@ export default class DhpChatMessage extends foundry.documents.ChatMessage {
         const html = await super.renderHTML({ actor: actorData, author: this.author });
 
         if (this.flags.core?.RollTable) {
-            html.querySelector('.roll-buttons.apply-buttons').remove();
+            html.querySelector('.roll-buttons.apply-buttons')?.remove();
         }
 
         this.enrichChatMessage(html);
@@ -155,7 +155,15 @@ export default class DhpChatMessage extends foundry.documents.ChatMessage {
         event.stopPropagation();
         const config = foundry.utils.deepClone(this.system);
         config.event = event;
-        this.system.action?.workflow.get('damage')?.execute(config, this._id, true);
+        await this.system.action?.workflow.get('damage')?.execute(config, this._id, true);
+
+        Hooks.callAll(socketEvent.Refresh, { refreshType: RefreshType.TagTeamRoll });
+        await game.socket.emit(`system.${CONFIG.DH.id}`, {
+            action: socketEvent.Refresh,
+            data: {
+                refreshType: RefreshType.TagTeamRoll
+            }
+        });
     }
 
     async onApplyDamage(event) {

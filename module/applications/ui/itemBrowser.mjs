@@ -93,16 +93,17 @@ export class ItemBrowser extends HandlebarsApplicationMixin(ApplicationV2) {
         if (lite === true) {
             this.compendiumBrowserTypeKey = 'compendiumBrowserLite';
         }
-        const userPresetPosition = game.user.getFlag(CONFIG.DH.id, CONFIG.DH.FLAGS[`${this.compendiumBrowserTypeKey}`].position) ;
- 
+        const userPresetPosition = game.user.getFlag(
+            CONFIG.DH.id,
+            CONFIG.DH.FLAGS[`${this.compendiumBrowserTypeKey}`].position
+        );
+
         options.position = userPresetPosition ?? ItemBrowser.DEFAULT_OPTIONS.position;
-        
+
         if (!userPresetPosition) {
             const width = noFolder === true || lite === true ? 600 : 850;
-            if (this.rendered)
-                this.setPosition({ width });
-            else
-                options.position.width = width;
+            if (this.rendered) this.setPosition({ width });
+            else options.position.width = width;
         }
 
         await super._preRender(context, options);

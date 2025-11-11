@@ -5,6 +5,8 @@ import { createScrollText, damageKeyToNumber } from '../helpers/utils.mjs';
 import DhCompanionLevelUp from '../applications/levelup/companionLevelup.mjs';
 
 export default class DhpActor extends Actor {
+    parties = new Set();
+
     #scrollTextQueue = [];
     #scrollTextInterval;
 
@@ -74,13 +76,27 @@ export default class DhpActor extends Actor {
 
         // Configure prototype token settings
         const prototypeToken = {};
-        if (['character', 'companion'].includes(this.type))
+        if (['character', 'companion', 'party'].includes(this.type))
             Object.assign(prototypeToken, {
                 sight: { enabled: true },
                 actorLink: true,
                 disposition: CONST.TOKEN_DISPOSITIONS.FRIENDLY
             });
         this.updateSource({ prototypeToken });
+    }
+
+    _onUpdate(changes, options, userId) {
+        super._onUpdate(changes, options, userId);
+        for (const party of this.parties) {
+            party.render();
+        }
+    }
+
+    _onDelete(options, userId) {
+        super._onDelete(options, userId);
+        for (const party of this.parties) {
+            party.render();
+        }
     }
 
     async updateLevel(newLevel) {
@@ -807,5 +823,15 @@ export default class DhpActor extends Actor {
         }
 
         return await super.importFromJSON(json);
+    }
+
+    /**
+     * Generate an array of localized tag.
+     * @returns {string[]} An array of localized tag strings.
+     */
+    _getTags() {
+        const tags = [];
+        if (this.system._getTags) tags.push(...this.system._getTags());
+        return tags;
     }
 }

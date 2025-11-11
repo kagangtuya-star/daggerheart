@@ -20,7 +20,8 @@
             "character": "Character",
             "companion": "Companion",
             "adversary": "Adversary",
-            "environment": "Environment"
+            "environment": "Environment",
+            "party": "Party"
         }
     },
     "CONTROLS": {
@@ -437,7 +438,9 @@
             },
             "HUD": {
                 "tokenHUD": {
-                    "genericEffects": "Foundry Effects"
+                    "genericEffects": "Foundry Effects",
+                    "depositPartyTokens": "Deposit Party Tokens",
+                    "retrievePartyTokens": "Retrieve Party Tokens"
                 }
             },
             "ImageSelect": {
@@ -568,6 +571,19 @@
             "ResourceDice": {
                 "title": "{name} Resource",
                 "rerollDice": "Reroll Dice"
+            },
+            "TagTeamSelect": {
+                "title": "Tag Team Roll",
+                "leaderTitle": "Initiating Character",
+                "membersTitle": "Participants",
+                "partyTeam": "Party Team",
+                "hopeCost": "Hope Cost",
+                "initiatingCharacter": "Initiating Character",
+                "linkMessageHint": "Make a roll from your character sheet to link it to the Tag Team Roll",
+                "damageNotRolled": "Damage not rolled in chat message yet",
+                "insufficientHope": "The initiating character doesn't have enough hope",
+                "createTagTeam": "Create TagTeam Roll",
+                "chatMessageRollTitle": "Roll"
             }
         },
         "CLASS": {
@@ -1936,6 +1952,7 @@
                 "story": "Story",
                 "biography": "Biography",
                 "general": "General",
+                "resources": "Resources",
                 "foundation": "Foundation",
                 "specialization": "Specialization",
                 "mastery": "Mastery",
@@ -1953,6 +1970,8 @@
                 "downtime": "Downtime",
                 "roll": "Roll",
                 "rules": "Rules",
+                "partyMembers": "Party Members",
+                "projects": "Projects",
                 "types": "Types",
                 "itemFeatures": "Item Features",
                 "questions": "Questions",
@@ -2233,7 +2252,8 @@
                         "target": {
                             "label": "Target"
                         }
-                    }
+                    },
+                    "useResourcePips": { "label": "Pip Display For Resources" }
                 },
                 "fearDisplay": {
                     "token": "Tokens",
@@ -2480,6 +2500,17 @@
                     "title": "Effects Applied"
                 },
                 "featureTitle": "Class Feature",
+                "groupRoll": {
+                    "title": "Group Roll",
+                    "leader": "Leader",
+                    "partyTeam": "Party Team",
+                    "team": "Team",
+                    "selectLeader": "Select a Leader",
+                    "selectMember": "Select a Member",
+                    "rerollTitle": "Reroll Group Roll",
+                    "rerollContent": "Are you sure you want to reroll your {trait} check?",
+                    "rerollTooltip": "Reroll"
+                },
                 "healingRoll": {
                     "title": "Heal - {damage}",
                     "heal": "Heal",
@@ -2496,7 +2527,15 @@
                 },
                 "resourceRoll": {
                     "playerMessage": "{user} rerolled their {name}"
+                },
+                "tagTeam": {
+                    "title": "Tag Team",
+                    "membersTitle": "Members"
                 }
+            },
+            "ChatLog": {
+                "rerollDamage": "Reroll Damage",
+                "assignTagRoll": "Assign as Tag Roll"
             },
             "Countdowns": {
                 "title": "Countdowns",
@@ -2577,6 +2616,8 @@
                 "wrongDomain": "The card isn't from one of your class domains.",
                 "cardTooHighLevel": "The card is too high level!",
                 "duplicateCard": "You cannot select the same card more than once.",
+                "duplicateCharacter": "This actor is already registered in the party members list.",
+                "onlyCharactersInPartySheet": "You can drag only characters to a party sheet.",
                 "notPrimary": "The weapon is not a primary weapon!",
                 "notSecondary": "The weapon is not a secondary weapon!",
                 "itemTooHighTier": "The item must be from Tier1",
@@ -2611,7 +2652,9 @@
                 "noDiceSystem": "Your selected dice {system} does not have a {faces} dice",
                 "gmMenuRefresh": "You refreshed all actions and resources {types}",
                 "subclassAlreadyLinked": "{name} is already a subclass in the class {class}. Remove it from there if you want it to be a subclass to this class.",
-                "gmRequired": "This action requires an online GM"
+                "gmRequired": "This action requires an online GM",
+                "gmOnly": "This can only be accessed by the GM",
+                "noActorOwnership": "You do not have permissions for this character"
             },
             "Sidebar": {
                 "daggerheartMenu": {
@@ -2646,7 +2689,8 @@
                 "remainingUses": "Uses refresh on {type}",
                 "rightClickExtand": "Right-Click to extand",
                 "companionPartnerLevelBlock": "The companion needs an assigned partner to level up.",
-                "configureAttribution": "Configure Attribution"
+                "configureAttribution": "Configure Attribution",
+                "deleteItem": "Delete Item"
             }
         }
     }

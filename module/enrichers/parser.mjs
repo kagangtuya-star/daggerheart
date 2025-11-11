@@ -1,5 +1,5 @@
 /**
- * @param {string} paramString The parameter inside the brackets of something like @Template[] to parse 
+ * @param {string} paramString The parameter inside the brackets of something like @Template[] to parse
  * @param {Object} options
  * @param {string} options.first If set, the first parameter is treated as a value with this as its key
  * @returns {Record<string, string | undefined> | null}
