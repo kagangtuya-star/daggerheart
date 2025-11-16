@@ -2366,7 +2366,6 @@
                     "maxDomains": { "label": "Max Class Domains", "hint": "Max domains you can set on a class" }
                 },
                 "currency": {
-                    "enabled": "Enable Overrides",
                     "title": "Currency Overrides",
                     "currencyName": "Currency Name",
                     "coinName": "Coin Name",
