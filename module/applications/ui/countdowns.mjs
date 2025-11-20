@@ -33,6 +33,7 @@ export default class DhCountdowns extends HandlebarsApplicationMixin(Application
         actions: {
             toggleViewMode: DhCountdowns.#toggleViewMode,
             editCountdowns: DhCountdowns.#editCountdowns,
+            loopCountdown: DhCountdowns.#loopCountdown,
             decreaseCountdown: (_, target) => this.editCountdown(false, target),
             increaseCountdown: (_, target) => this.editCountdown(true, target)
         },
@@ -111,11 +112,26 @@ export default class DhCountdowns extends HandlebarsApplicationMixin(Application
                 return acc;
             }, []);
             const nonGmPlayers = game.users.filter(x => !x.isGM);
+
+            const countdownEditable = game.user.isGM || ownership === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
+            const isLooping = countdown.progress.looping !== CONFIG.DH.GENERAL.countdownLoopingTypes.noLooping;
+            const loopTooltip = isLooping
+                ? countdown.progress.looping === CONFIG.DH.GENERAL.countdownLoopingTypes.increasing.id
+                    ? 'DAGGERHEART.UI.Countdowns.increasingLoop'
+                    : countdown.progress.looping === CONFIG.DH.GENERAL.countdownLoopingTypes.decreasing.id
+                      ? 'DAGGERHEART.UI.Countdowns.decreasingLoop'
+                      : 'DAGGERHEART.UI.Countdowns.loop'
+                : null;
+            const loopDisabled =
+                !countdownEditable || (isLooping && (countdown.progress.current > 0 || countdown.progress.max === '0'));
+
             acc[key] = {
                 ...countdown,
-                editable: game.user.isGM || ownership === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
-                playerAccess: playersWithAccess.length !== nonGmPlayers.length ? playersWithAccess : [],
-                noPlayerAccess: nonGmPlayers.length && playersWithAccess.length === 0
+                editable: countdownEditable,
+                noPlayerAccess: nonGmPlayers.length && playersWithAccess.length === 0,
+                shouldLoop: isLooping && countdown.progress.current === 0 && countdown.progress.max > 0,
+                loopDisabled: isLooping ? loopDisabled : null,
+                loopTooltip: isLooping && game.i18n.localize(loopTooltip)
             };
             return acc;
         }, {});
@@ -161,6 +177,28 @@ export default class DhCountdowns extends HandlebarsApplicationMixin(Application
         new game.system.api.applications.ui.CountdownEdit().render(true);
     }
 
+    static async #loopCountdown(_, target) {
+        if (!DhCountdowns.canPerformEdit()) return;
+
+        const settings = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Countdowns);
+        const countdown = settings.countdowns[target.id];
+        const newMax =
+            countdown.progress.looping === CONFIG.DH.GENERAL.countdownLoopingTypes.increasing.id
+                ? countdown.progress.max + 1
+                : countdown.progress.looping === CONFIG.DH.GENERAL.countdownLoopingTypes.decreasing.id
+                  ? Math.max(countdown.progress.max - 1, 0)
+                  : countdown.progress.max;
+        await settings.updateSource({
+            [`countdowns.${target.id}.progress`]: {
+                current: newMax,
+                max: newMax
+            }
+        });
+        await emitAsGM(GMUpdateEvent.UpdateCountdowns, DhCountdowns.gmSetSetting.bind(settings), settings, null, {
+            refreshType: RefreshType.Countdown
+        });
+    }
+
     static async editCountdown(increase, target) {
         if (!DhCountdowns.canPerformEdit()) return;
 
@@ -197,6 +235,9 @@ export default class DhCountdowns extends HandlebarsApplicationMixin(Application
     }
 
     static async updateCountdowns(progressType) {
+        const { countdownAutomation } = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Automation);
+        if (!countdownAutomation) return;
+
         const countdownSetting = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Countdowns);
         const updatedCountdowns = Object.keys(countdownSetting.countdowns).reduce((acc, key) => {
             const countdown = countdownSetting.countdowns[key];
