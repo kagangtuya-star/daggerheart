@@ -81,22 +81,15 @@ export default class DhCountdowns extends HandlebarsApplicationMixin(Application
         return frame;
     }
 
-    /**@inheritdoc */
-    async _onFirstRender(context, options) {
-        await super._onFirstRender(context, options);
-
-        this.toggleCollapsedPosition(undefined, !ui.sidebar.expanded);
-    }
-
     /** Returns countdown data filtered by ownership */
     #getCountdowns() {
         const setting = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Countdowns);
-        const values = Object.entries(setting.countdowns).map(([key, countdown]) => ({ 
-            key, 
-            countdown, 
-            ownership: DhCountdowns.#getPlayerOwnership(game.user, setting, countdown) 
+        const values = Object.entries(setting.countdowns).map(([key, countdown]) => ({
+            key,
+            countdown,
+            ownership: DhCountdowns.#getPlayerOwnership(game.user, setting, countdown)
         }));
-        return values.filter((v) => v.ownership !== CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE);
+        return values.filter(v => v.ownership !== CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE);
     }
 
     /** @override */
@@ -136,14 +129,6 @@ export default class DhCountdowns extends HandlebarsApplicationMixin(Application
             ? setting.defaultOwnership
             : playerOwnership;
     }
-
-    toggleCollapsedPosition = async (_, collapsed) => {
-        if (!this.element) return;
-
-        this.sidebarCollapsed = collapsed;
-        if (!collapsed) this.element.classList.add('expanded');
-        else this.element.classList.remove('expanded');
-    };
 
     cooldownRefresh = ({ refreshType }) => {
         if (refreshType === RefreshType.Countdown) this.render();
@@ -200,7 +185,6 @@ export default class DhCountdowns extends HandlebarsApplicationMixin(Application
     }
 
     setupHooks() {
-        Hooks.on('collapseSidebar', this.toggleCollapsedPosition.bind());
         Hooks.on(socketEvent.Refresh, this.cooldownRefresh.bind());
     }
 
@@ -208,7 +192,6 @@ export default class DhCountdowns extends HandlebarsApplicationMixin(Application
         /* Opt out of Foundry's standard behavior of closing all application windows marked as UI when Escape is pressed */
         if (options.closeKey) return;
 
-        Hooks.off('collapseSidebar', this.toggleCollapsedPosition);
         Hooks.off(socketEvent.Refresh, this.cooldownRefresh);
         return super.close(options);
     }
@@ -249,5 +232,8 @@ export default class DhCountdowns extends HandlebarsApplicationMixin(Application
     async _onRender(context, options) {
         await super._onRender(context, options);
         this.element.hidden = !game.user.isGM && this.#getCountdowns().length === 0;
+        if (options?.force) {
+            document.getElementById('ui-right-column-1')?.appendChild(this.element);
+        }
     }
 }
