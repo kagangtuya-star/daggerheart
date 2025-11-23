@@ -130,7 +130,8 @@
             "RangeDependance": {
                 "hint": "Settings for an optional distance at which this effect should activate",
                 "title": "Range Dependant"
-            }
+            },
+            "immuneStatusText": "Immunity: {status}"
         },
         "ACTORS": {
             "Adversary": {
@@ -396,7 +397,8 @@
                 "stressReduction": "Reduce By Stress",
                 "title": "Damage Reduction",
                 "unncessaryStress": "You don't need to expend stress",
-                "usedMarks": "Used Marks"
+                "usedMarks": "Used Marks",
+                "reduceSeverity": "Severity Reduced By {nr}"
             },
             "DeathMove": {
                 "selectMove": "Select Move",
@@ -1034,7 +1036,8 @@
             },
             "ItemResourceType": {
                 "simple": "Simple",
-                "diceValue": "Dice Value"
+                "diceValue": "Dice Value",
+                "die": "Die"
             },
             "Range": {
                 "self": {
@@ -2530,7 +2533,8 @@
                     "abilityCheckTitle": "{ability} Check"
                 },
                 "effectSummary": {
-                    "title": "Effects Applied"
+                    "title": "Effects Applied",
+                    "immunityTo": "Immunity: {immunities}"
                 },
                 "featureTitle": "Class Feature",
                 "groupRoll": {
@@ -2728,7 +2732,8 @@
                 "rightClickExtand": "Right-Click to extand",
                 "companionPartnerLevelBlock": "The companion needs an assigned partner to level up.",
                 "configureAttribution": "Configure Attribution",
-                "deleteItem": "Delete Item"
+                "deleteItem": "Delete Item",
+                "immune": "Immune"
             }
         }
     }
