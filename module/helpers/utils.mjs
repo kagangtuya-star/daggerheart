@@ -452,6 +452,23 @@ export async function waitForDiceSoNice(message) {
     }
 }
 
+export function refreshIsAllowed(allowedTypes, typeToCheck) {
+    switch (typeToCheck) {
+        case CONFIG.DH.GENERAL.refreshTypes.scene.id:
+        case CONFIG.DH.GENERAL.refreshTypes.session.id:
+        case CONFIG.DH.GENERAL.refreshTypes.longRest.id:
+            return allowedTypes.includes(typeToCheck);
+        case CONFIG.DH.GENERAL.refreshTypes.shortRest.id:
+            return allowedTypes.some(
+                x =>
+                    x === CONFIG.DH.GENERAL.refreshTypes.shortRest.id ||
+                    x === CONFIG.DH.GENERAL.refreshTypes.longRest.id
+            );
+        default:
+            return false;
+    }
+}
+
 export async function getCritDamageBonus(formula) {
     const critRoll = new Roll(formula);
     return critRoll.dice.reduce((acc, dice) => acc + dice.faces, 0);
