@@ -74,7 +74,7 @@ Parameters:
     {{/if}}
     {{#if (and (not hideResources) (gte item.system.quantity 0))}}
     <div class="item-resource">
-      <input type="number" class="inventory-item-quantity" value="{{item.system.quantity}}" min="0" />
+      <input type="number" id="{{item.uuid}}-quantity" class="inventory-item-quantity" value="{{item.system.quantity}}" min="0" />
     </div>
     {{/if}}
 
