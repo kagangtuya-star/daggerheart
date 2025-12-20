@@ -193,9 +193,9 @@ Hooks.on('ready', async () => {
 
 Hooks.once('dicesoniceready', () => {});
 
-Hooks.on('renderChatMessageHTML', (_, element, message) => {
+Hooks.on('renderChatMessageHTML', (document, element) => {
     enricherRenderSetup(element);
-    const cssClass = message.message.flags?.daggerheart?.cssClass;
+    const cssClass = document.flags?.daggerheart?.cssClass;
     if (cssClass) cssClass.split(' ').forEach(cls => element.classList.add(cls));
 });
 
