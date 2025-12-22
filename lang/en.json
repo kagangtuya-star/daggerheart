@@ -611,6 +611,9 @@
                 "insufficientHope": "The initiating character doesn't have enough hope",
                 "createTagTeam": "Create TagTeam Roll",
                 "chatMessageRollTitle": "Roll"
+            },
+            "TokenConfig": {
+                "actorSizeUsed": "Actor size is set, determining the dimensions"
             }
         },
         "CLASS": {
@@ -1146,6 +1149,14 @@
                 "inFront": "In Front",
                 "rect": "Rectangle",
                 "ray": "Ray"
+            },
+            "TokenSize": {
+                "tiny": "Tiny",
+                "small": "Small",
+                "medium": "Medium",
+                "large": "Large",
+                "huge": "Huge",
+                "gargantuan": "Gargantuan"
             },
             "Traits": {
                 "agility": {
@@ -2168,6 +2179,7 @@
                 "plural": "Targets"
             },
             "title": "Title",
+            "tokenSize": "Token Size",
             "total": "Total",
             "traitModifier": "Trait Modifier",
             "true": "True",
@@ -2224,6 +2236,7 @@
                     "tokenRingImg": { "label": "Subject Texture" },
                     "tokenSize": {
                         "placeholder": "Using character dimensions",
+                        "disabledPlaceholder": "Set by character size",
                         "height": { "label": "Height" },
                         "width": { "label": "Width" }
                     },
@@ -2249,7 +2262,9 @@
                 "hybridizeFeatureTitle": "Hybrid Features",
                 "hybridizeDrag": "Drag a form here to hybridize it.",
                 "mainTrait": "Main Trait",
-                "traitBonus": "Trait Bonus"
+                "traitBonus": "Trait Bonus",
+                "evolvedTokenHint": "An evolved beastform's token is based on that of the form you evolve",
+                "evolvedImagePlaceholder": "The image for the form selected for evolution will be used"
             },
             "Class": {
                 "hopeFeatures": "Hope Features",
@@ -2802,7 +2817,8 @@
                 "companionPartnerLevelBlock": "The companion needs an assigned partner to level up.",
                 "configureAttribution": "Configure Attribution",
                 "deleteItem": "Delete Item",
-                "immune": "Immune"
+                "immune": "Immune",
+                "tokenSize": "The token size used on the canvas"
             }
         }
     }

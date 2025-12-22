@@ -42,7 +42,8 @@ export default class BaseDataActor extends foundry.abstract.TypeDataModel {
             settingSheet: null,
             hasResistances: true,
             hasAttribution: false,
-            hasLimitedView: true
+            hasLimitedView: true,
+            usesSize: false
         };
     }
 
@@ -76,6 +77,13 @@ export default class BaseDataActor extends foundry.abstract.TypeDataModel {
                     'DAGGERHEART.GENERAL.DamageResistance.magicalImmunity',
                     'DAGGERHEART.GENERAL.DamageResistance.magicalReduction'
                 )
+            });
+        if (this.metadata.usesSize)
+            schema.size = new fields.StringField({
+                required: true,
+                nullable: false,
+                choices: CONFIG.DH.ACTOR.tokenSize,
+                initial: CONFIG.DH.ACTOR.tokenSize.custom.id
             });
         return schema;
     }
