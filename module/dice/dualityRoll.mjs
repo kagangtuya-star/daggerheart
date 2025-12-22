@@ -293,7 +293,7 @@ export default class DualityRoll extends D20Roll {
 
         if (!config.roll.hasOwnProperty('success') && !config.targets?.length) return;
 
-        const rollResult = config.roll.success || config.targets.some(t => t.hit),
+        const rollResult = config.roll.success || config.targets?.some(t => t.hit),
             looseSpotlight = !rollResult || config.roll.result.duality === -1;
 
         if (looseSpotlight && game.combat?.active) {

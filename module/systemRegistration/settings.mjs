@@ -21,8 +21,8 @@ export const registerDHSettings = () => {
         scope: 'world',
         config: true,
         type: Boolean,
-        onChange: () => ui.combat.render(),
-    })
+        onChange: () => ui.combat.render()
+    });
 };
 
 const registerMenuSettings = () => {
