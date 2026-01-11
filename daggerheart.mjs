@@ -84,6 +84,8 @@ Hooks.once('init', () => {
         fields
     };
 
+    game.system.registeredTriggers = new RegisteredTriggers();
+
     const { DocumentSheetConfig } = foundry.applications.apps;
     DocumentSheetConfig.unregisterSheet(TokenDocument, 'core', foundry.applications.sheets.TokenConfig);
     DocumentSheetConfig.registerSheet(TokenDocument, SYSTEM.id, applications.sheetConfigs.DhTokenConfig, {
@@ -379,3 +381,50 @@ Hooks.on('refreshToken', (_, options) => {
 
 Hooks.on('renderCompendiumDirectory', (app, html) => applications.ui.ItemBrowser.injectSidebarButton(html));
 Hooks.on('renderDocumentDirectory', (app, html) => applications.ui.ItemBrowser.injectSidebarButton(html));
+
+class RegisteredTriggers extends Map {
+    constructor() {
+        super();
+    }
+
+    async registerTriggers(trigger, actor, triggeringActorType, uuid, commands) {
+        const existingTrigger = this.get(trigger);
+        if (!existingTrigger) this.set(trigger, new Map());
+
+        this.get(trigger).set(uuid, { actor, triggeringActorType, commands });
+    }
+
+    async runTrigger(trigger, currentActor, ...args) {
+        const updates = [];
+        const triggerSettings = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Automation).triggers;
+        if (!triggerSettings.enabled) return updates;
+
+        const dualityTrigger = this.get(trigger);
+        if (dualityTrigger) {
+            for (let { actor, triggeringActorType, commands } of dualityTrigger.values()) {
+                const triggerData = CONFIG.DH.TRIGGER.triggers[trigger];
+                if (triggerData.usesActor && triggeringActorType !== 'any') {
+                    if (triggeringActorType === 'self' && currentActor?.uuid !== actor) continue;
+                    else if (triggeringActorType === 'other' && currentActor?.uuid === actor) continue;
+                }
+
+                for (let command of commands) {
+                    try {
+                        const result = await command(...args);
+                        if (result?.updates?.length) updates.push(...result.updates);
+                    } catch (_) {
+                        const triggerName = game.i18n.localize(triggerData.label);
+                        ui.notifications.error(
+                            game.i18n.format('DAGGERHEART.CONFIG.Triggers.triggerError', {
+                                trigger: triggerName,
+                                actor: currentActor?.name
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
+        return updates;
+    }
+}
