@@ -125,6 +125,33 @@ export default class BaseDataItem extends foundry.abstract.TypeDataModel {
     }
 
     /**
+     * Augments the description for the item with type specific info to display. Implemented in applicable item subtypes.
+     * @param {object} [options] - Options that modify the styling of the rendered template. { headerStyle: undefined|'none'|'large' }
+     * @returns {string}
+     */
+    async getDescriptionData(_options) {
+        return { prefix: null, value: this.description, suffix: null };
+    }
+
+    /**
+     * Gets the enriched and augmented description for the item.
+     * @param {object} [options] - Options that modify the styling of the rendered template. { headerStyle: undefined|'none'|'large' }
+     * @returns {string}
+     */
+    async getEnrichedDescription() {
+        if (!this.metadata.hasDescription) return '';
+
+        const { prefix, value, suffix } = await this.getDescriptionData();
+        const fullDescription = [prefix, value, suffix].filter(p => !!p).join('\n<hr>\n');
+
+        return await foundry.applications.ux.TextEditor.implementation.enrichHTML(fullDescription, {
+            relativeTo: this,
+            rollData: this.getRollData(),
+            secrets: this.isOwner
+        });
+    }
+
+    /**
      * Obtain a data object used to evaluate any dice rolls associated with this Item Type
      * @param {object} [options] - Options which modify the getRollData method.
      * @returns {object}
