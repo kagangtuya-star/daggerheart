@@ -2320,6 +2320,9 @@
             "DomainCard": {
                 "type": "Type",
                 "recallCost": "Recall Cost",
+                "vaultActive": "Active In Vault",
+                "loadoutIgnore": "Ignores Loadout Limits",
+                "domainTouched": "Domain Touched",
                 "foundationTitle": "Foundation",
                 "specializationTitle": "Specialization",
                 "masteryTitle": "Mastery"
@@ -2820,7 +2823,8 @@
                 "noActorOwnership": "You do not have permissions for this character",
                 "documentIsMissing": "The {documentType} is missing from the world.",
                 "tokenActorMissing": "{name} is missing an Actor",
-                "tokenActorsMissing": "[{names}] missing Actors"
+                "tokenActorsMissing": "[{names}] missing Actors",
+                "domainTouchRequirement": "This domain card requires {nr} {domain} cards in the loadout to be used"
             },
             "Sidebar": {
                 "actorDirectory": {

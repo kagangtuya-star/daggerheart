@@ -20,7 +20,10 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
         }
 
         if (this.parent?.type === 'domainCard') {
-            return this.parent.system.inVault;
+            const isVaultSupressed = this.parent.system.isVaultSupressed;
+            const domainTouchedSupressed = this.parent.system.isDomainTouchedSuppressed;
+
+            return isVaultSupressed || domainTouchedSupressed;
         }
 
         return super.isSuppressed;

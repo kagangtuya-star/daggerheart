@@ -33,7 +33,7 @@ export default class CharacterSheet extends DHBaseActorSheet {
             advanceResourceDie: CharacterSheet.#advanceResourceDie,
             cancelBeastform: CharacterSheet.#cancelBeastform,
             useDowntime: this.useDowntime,
-            viewParty: CharacterSheet.#viewParty,
+            viewParty: CharacterSheet.#viewParty
         },
         window: {
             resizable: true,
@@ -829,7 +829,7 @@ export default class CharacterSheet extends DHBaseActorSheet {
     static async #toggleVault(_event, button) {
         const doc = await getDocFromElement(button);
         const { available } = this.document.system.loadoutSlot;
-        if (doc.system.inVault && !available) {
+        if (doc.system.inVault && !available && !doc.system.loadoutIgnore) {
             return ui.notifications.warn(game.i18n.localize('DAGGERHEART.UI.Notifications.loadoutMaxReached'));
         }
 
@@ -907,32 +907,32 @@ export default class CharacterSheet extends DHBaseActorSheet {
             return;
         }
 
-        const buttons = parties.map((p) => {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.classList.add("plain");
-            const img = document.createElement("img");
+        const buttons = parties.map(p => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.classList.add('plain');
+            const img = document.createElement('img');
             img.src = p.img;
             button.append(img);
-            const name = document.createElement("span");
+            const name = document.createElement('span');
             name.textContent = p.name;
             button.append(name);
-            button.addEventListener("click", () => {
+            button.addEventListener('click', () => {
                 p.sheet?.render({ force: true });
                 game.tooltip.dismissLockedTooltips();
             });
             return button;
         });
 
-        const html = document.createElement("div");
-        html.classList.add("party-list");
+        const html = document.createElement('div');
+        html.classList.add('party-list');
         html.append(...buttons);
-        
+
         game.tooltip.dismissLockedTooltips();
         game.tooltip.activate(target, {
             html,
-            locked: true,
-        })
+            locked: true
+        });
     }
 
     /**
