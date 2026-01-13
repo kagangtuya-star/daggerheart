@@ -309,7 +309,7 @@ Hooks.on('chatMessage', (_, message) => {
             target,
             difficulty,
             title,
-            label: 'test',
+            label: game.i18n.localize('DAGGERHEART.GENERAL.dualityRoll'),
             actionType: null,
             advantage
         });
