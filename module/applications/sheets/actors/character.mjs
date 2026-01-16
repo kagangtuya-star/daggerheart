@@ -712,7 +712,7 @@ export default class CharacterSheet extends DHBaseActorSheet {
             headerTitle: game.i18n.format('DAGGERHEART.UI.Chat.dualityRoll.abilityCheckTitle', {
                 ability: abilityLabel
             }),
-            effects: await await game.system.api.data.actions.actionsTypes.base.getEffects(this.document),
+            effects: await game.system.api.data.actions.actionsTypes.base.getEffects(this.document),
             roll: {
                 trait: button.dataset.attribute,
                 type: 'trait'
