@@ -285,6 +285,7 @@
         },
         "ChatMessage": {
             "dualityRoll": {},
+            "fateRoll": {},
             "adversaryRoll": {},
             "damageRoll": {},
             "abilityUse": {},
