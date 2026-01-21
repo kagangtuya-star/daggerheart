@@ -16,7 +16,7 @@ export default class CharacterResetDialog extends HandlebarsApplicationMixin(App
                 portrait: { keep: true, label: 'DAGGERHEART.GENERAL.portrait' },
                 name: { keep: true, label: 'Name' },
                 biography: { keep: true, label: 'DAGGERHEART.GENERAL.Tabs.biography' },
-                inventory: { keep: false, label: 'DAGGERHEART.GENERAL.inventory' }
+                inventory: { keep: true, label: 'DAGGERHEART.GENERAL.inventory' }
             }
         };
     }
