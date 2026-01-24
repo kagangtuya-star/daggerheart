@@ -107,6 +107,7 @@ export const enrichedDualityRoll = async (
 
     if (target) {
         const result = await target.diceRoll(config);
+        if (!result) return;
         result.resourceUpdates.updateResources();
     } else {
         // For no target, call DualityRoll directly with basic data
