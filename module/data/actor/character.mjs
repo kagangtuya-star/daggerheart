@@ -662,6 +662,11 @@ export default class DhCharacter extends BaseDataActor {
         const globalHopeMax = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Homebrew).maxHope;
         this.resources.hope.max = globalHopeMax - this.scars;
         this.resources.hitPoints.max += this.class.value?.system?.hitPoints ?? 0;
+
+        /* Companion Related Data */
+        this.companionData = {
+            levelupChoices: this.levelData.level.current - 1
+        };
     }
 
     prepareDerivedData() {
@@ -731,6 +736,16 @@ export default class DhCharacter extends BaseDataActor {
                     ...changes.system.resources.hope,
                     value: changes.system.resources.hope.value + newHopeValue
                 };
+            }
+        }
+
+        /* Force companion data prep */
+        if (this.companion) {
+            if (
+                changes.system?.levelData?.level?.current !== undefined &&
+                changes.system.levelData.level.current !== this._source.levelData.level.current
+            ) {
+                this.companion.update(this.companion.toObject(), { diff: false, recursive: false });
             }
         }
     }
