@@ -72,18 +72,6 @@ const typeSettingsMap = {
  */
 export default function DHApplicationMixin(Base) {
     class DHSheetV2 extends HandlebarsApplicationMixin(Base) {
-        /**
-         * @param {DHSheetV2Configuration} [options={}]
-         */
-        constructor(options = {}) {
-            super(options);
-            /**
-             * @type {foundry.applications.ux.DragDrop[]}
-             * @private
-             */
-            this._dragDrop = this._createDragDropHandlers();
-        }
-
         #nonHeaderAttribution = ['environment', 'ancestry', 'community', 'domainCard'];
 
         /**
@@ -177,7 +165,7 @@ export default function DHApplicationMixin(Base) {
         /**@inheritdoc */
         _attachPartListeners(partId, htmlElement, options) {
             super._attachPartListeners(partId, htmlElement, options);
-            this._dragDrop.forEach(d => d.bind(htmlElement));
+            // this._dragDrop.forEach(d => d.bind(htmlElement));
 
             // Handle delta inputs
             for (const deltaInput of htmlElement.querySelectorAll('input[data-allow-delta]')) {
@@ -349,21 +337,6 @@ export default function DHApplicationMixin(Base) {
         /* -------------------------------------------- */
         /*  Drag and Drop                               */
         /* -------------------------------------------- */
-
-        /**
-         * Creates drag-drop handlers from the configured options.
-         * @returns {foundry.applications.ux.DragDrop[]}
-         * @private
-         */
-        _createDragDropHandlers() {
-            return this.options.dragDrop.map(d => {
-                d.callbacks = {
-                    dragstart: this._onDragStart.bind(this),
-                    drop: this._onDrop.bind(this)
-                };
-                return new foundry.applications.ux.DragDrop.implementation(d);
-            });
-        }
 
         /**
          * Handle dragStart event.

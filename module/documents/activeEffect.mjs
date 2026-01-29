@@ -109,17 +109,25 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
 
     /**@inheritdoc*/
     static applyField(model, change, field) {
-        change.value = DhActiveEffect.getChangeValue(model, change, change.effect);
+        change.key = DhActiveEffect.getChangeKey(model, change, change.effect);
         super.applyField(model, change, field);
     }
 
     /** */
+    static getChangeKey(model, change, effect) {
+        return DhActiveEffect.parseValue(change.key, model, change, effect);
+    }
+
     static getChangeValue(model, change, effect) {
-        let value = change.value;
-        const isOriginTarget = value.toLowerCase().includes('origin.@');
+        return DhActiveEffect.parseValue(change.value, model, change, effect);
+    }
+
+    static parseValue(value, model, change, effect) {
+        let key = value;
+        const isOriginTarget = key.toLowerCase().includes('origin.@');
         let parseModel = model;
         if (isOriginTarget && effect.origin) {
-            value = change.value.replaceAll(/origin\.@/gi, '@');
+            key = change.key.replaceAll(/origin\.@/gi, '@');
             try {
                 const originEffect = foundry.utils.fromUuidSync(effect.origin);
                 const doc =
@@ -130,8 +138,8 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
             } catch (_) {}
         }
 
-        const evalValue = this.effectSafeEval(itemAbleRollParse(value, parseModel, effect.parent));
-        return evalValue ?? value;
+        const evalValue = this.effectSafeEval(itemAbleRollParse(key, parseModel, effect.parent));
+        return evalValue ?? key;
     }
 
     /**

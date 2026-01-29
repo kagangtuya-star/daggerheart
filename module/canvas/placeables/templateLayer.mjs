@@ -6,7 +6,7 @@ export default class DhTemplateLayer extends foundry.canvas.layers.TemplateLayer
             order: 2,
             title: 'CONTROLS.GroupMeasure',
             icon: 'fa-solid fa-ruler-combined',
-            visible: game.user.can('TEMPLATE_CREATE'),
+            visible: game.user.can('REGION_CREATE'),
             onChange: (event, active) => {
                 if (active) canvas.templates.activate();
             },

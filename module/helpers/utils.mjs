@@ -415,7 +415,12 @@ export async function createEmbeddedItemWithEffects(actor, baseData, update) {
             ...baseData,
             id: data.id,
             uuid: data.uuid,
-            effects: data.effects?.map(effect => effect.toObject())
+            _uuid: data.uuid,
+            effects: data.effects?.map(effect => effect.toObject()),
+            _stats: {
+                ...data._stats,
+                compendiumSource: data.pack ? `Compendium.${data.pack}.Item.${data.id}` : null
+            }
         }
     ]);
 

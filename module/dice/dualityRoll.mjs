@@ -67,7 +67,7 @@ export default class DualityRoll extends D20Roll {
 
     setRallyChoices() {
         return this.data?.parent?.appliedEffects.reduce((a, c) => {
-            const change = c.changes.find(ch => ch.key === 'system.bonuses.rally');
+            const change = c.system.changes.find(ch => ch.key === 'system.bonuses.rally');
             if (change) a.push({ value: c.id, label: change.value });
             return a;
         }, []);
@@ -179,7 +179,7 @@ export default class DualityRoll extends D20Roll {
     static async buildConfigure(config = {}, message = {}) {
         config.dialog ??= {};
         config.guaranteedCritical = config.data?.parent?.appliedEffects.reduce((a, c) => {
-            const change = c.changes.find(ch => ch.key === 'system.rules.roll.guaranteedCritical');
+            const change = c.system.changes.find(ch => ch.key === 'system.rules.roll.guaranteedCritical');
             if (change) a = true;
             return a;
         }, false);

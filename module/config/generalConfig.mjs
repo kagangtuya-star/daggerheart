@@ -70,8 +70,12 @@ export const range = {
     }
 };
 
+/* circle|cone|rect|ray used to be CONST.MEASURED_TEMPLATE_TYPES. Hardcoded for now */
 export const templateTypes = {
-    ...CONST.MEASURED_TEMPLATE_TYPES,
+    CIRCLE: 'circle',
+    CONE: 'cone',
+    RECTANGLE: 'rect',
+    RAY: 'ray',
     EMANATION: 'emanation',
     INFRONT: 'inFront'
 };
@@ -735,5 +739,38 @@ export const sceneRangeMeasurementSetting = {
     custom: {
         id: 'custom',
         label: 'Custom'
+    }
+};
+
+export const activeEffectModes = {
+    custom: {
+        id: 'custom',
+        priority: 0,
+        label: 'EFFECT.CHANGES.TYPES.custom'
+    },
+    multiply: {
+        id: 'multiply',
+        priority: 10,
+        label: 'EFFECT.CHANGES.TYPES.multiply'
+    },
+    add: {
+        id: 'add',
+        priority: 20,
+        label: 'EFFECT.CHANGES.TYPES.add'
+    },
+    downgrade: {
+        id: 'downgrade',
+        priority: 30,
+        label: 'EFFECT.CHANGES.TYPES.downgrade'
+    },
+    upgrade: {
+        id: 'upgrade',
+        priority: 40,
+        label: 'EFFECT.CHANGES.TYPES.upgrade'
+    },
+    override: {
+        id: 'override',
+        priority: 50,
+        label: 'EFFECT.CHANGES.TYPES.override'
     }
 };

@@ -111,9 +111,17 @@ export class ActionField extends foundry.data.fields.ObjectField {
      * @param {object} sourceData  Candidate source data of the root model.
      * @param {any} fieldData      The value of this field within the source data.
      */
-    migrateSource(sourceData, fieldData) {
-        const cls = this.getModel(fieldData);
-        if (cls) cls.migrateDataSafe(fieldData);
+    _migrate(sourceData, _fieldData) {
+        const source = sourceData ?? this.options.initial;
+        if (!source) return sourceData;
+
+        const cls = this.getModel(source);
+        if (cls) {
+            cls.migrateDataSafe(source);
+            return source;
+        }
+
+        return sourceData;
     }
 }
 

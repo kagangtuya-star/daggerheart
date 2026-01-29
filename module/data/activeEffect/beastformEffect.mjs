@@ -5,6 +5,7 @@ export default class BeastformEffect extends BaseEffect {
     static defineSchema() {
         const fields = foundry.data.fields;
         return {
+            ...super.defineSchema(),
             characterTokenData: new fields.SchemaField({
                 usesDynamicToken: new fields.BooleanField({ initial: false }),
                 tokenImg: new fields.FilePathField({

@@ -33,6 +33,7 @@ export default class DhActiveEffectConfig extends foundry.applications.sheets.Ac
         settings: { template: 'systems/daggerheart/templates/sheets/activeEffect/settings.hbs' },
         changes: {
             template: 'systems/daggerheart/templates/sheets/activeEffect/changes.hbs',
+            templates: ['systems/daggerheart/templates/sheets/activeEffect/change.hbs'],
             scrollable: ['ol[data-changes]']
         },
         footer: { template: 'systems/daggerheart/templates/sheets/global/tabs/tab-form-footer.hbs' }
@@ -121,8 +122,41 @@ export default class DhActiveEffectConfig extends foundry.applications.sheets.Ac
                     }));
                 }
                 break;
+            case 'changes':
+                const fields = this.document.system.schema.fields.changes.element.fields;
+                partContext.changes = await Promise.all(
+                    foundry.utils
+                        .deepClone(context.source.changes)
+                        .map((c, i) => this._prepareChangeContext(c, i, fields))
+                );
+                break;
         }
 
         return partContext;
+    }
+
+    _prepareChangeContext(change, index, fields) {
+        if (typeof change.value !== 'string') change.value = JSON.stringify(change.value);
+        const defaultPriority = game.system.api.documents.DhActiveEffect.CHANGE_TYPES[change.type]?.defaultPriority;
+        Object.assign(
+            change,
+            ['key', 'type', 'value', 'priority'].reduce((paths, fieldName) => {
+                paths[`${fieldName}Path`] = `system.changes.${index}.${fieldName}`;
+                return paths;
+            }, {})
+        );
+        return (
+            game.system.api.documents.DhActiveEffect.CHANGE_TYPES[change.type].render?.(
+                change,
+                index,
+                defaultPriority
+            ) ??
+            renderTemplate('systems/daggerheart/templates/sheets/activeEffect/change.hbs', {
+                change,
+                index,
+                defaultPriority,
+                fields
+            })
+        );
     }
 }
