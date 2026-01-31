@@ -1,6 +1,5 @@
 import DHActionConfig from '../../applications/sheets-configs/action-config.mjs';
 import { itemAbleRollParse } from '../../helpers/utils.mjs';
-import MappingField from './mappingField.mjs';
 
 /**
  * Specialized collection type for stored actions.
@@ -11,9 +10,9 @@ export class ActionCollection extends Collection {
     constructor(model, entries) {
         super();
         this.#model = model;
-        for (const entry of entries) {
-            if (!(entry instanceof game.system.api.models.actions.actionsTypes.base)) continue;
-            this.set(entry._id, entry);
+        for (const [key, value] of entries) {
+            if (!(value instanceof game.system.api.models.actions.actionsTypes.base)) continue;
+            this.set(key, value);
         }
     }
 
@@ -61,7 +60,7 @@ export class ActionCollection extends Collection {
 /**
  * Field that stores actions.
  */
-export class ActionsField extends MappingField {
+export class ActionsField extends foundry.data.fields.TypedObjectField {
     constructor(options) {
         super(new ActionField(), options);
     }
@@ -70,7 +69,7 @@ export class ActionsField extends MappingField {
 
     /** @inheritDoc */
     initialize(value, model, options) {
-        const actions = Object.values(super.initialize(value, model, options));
+        const actions = Object.entries(super.initialize(value, model, options));
         return new ActionCollection(model, actions);
     }
 }
