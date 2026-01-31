@@ -108,22 +108,15 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
     /* -------------------------------------------- */
 
     /**@inheritdoc*/
-    static applyField(model, change, field) {
-        change.key = DhActiveEffect.getChangeKey(model, change, change.effect);
-        super.applyField(model, change, field);
-    }
-
-    /** */
-    static getChangeKey(model, change, effect) {
-        return DhActiveEffect.parseValue(change.key, model, change, effect);
+    static applyChangeField(model, change, field) {
+        change.value = Number.isNumeric(change.value)
+            ? change.value
+            : DhActiveEffect.getChangeValue(model, change, change.effect);
+        super.applyChangeField(model, change, field);
     }
 
     static getChangeValue(model, change, effect) {
-        return DhActiveEffect.parseValue(change.value, model, change, effect);
-    }
-
-    static parseValue(value, model, change, effect) {
-        let key = value;
+        let key = change.value;
         const isOriginTarget = key.toLowerCase().includes('origin.@');
         let parseModel = model;
         if (isOriginTarget && effect.origin) {
