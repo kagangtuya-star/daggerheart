@@ -79,7 +79,7 @@ export default class DHEnvironmentSettings extends DHBaseActorSettings {
      * @type {ApplicationClickAction}
      */
     static async #removeCategory(_, target) {
-        await this.actor.update({ [`system.potentialAdversaries.-=${target.dataset.categoryId}`]: null });
+        await this.actor.update({ [`system.potentialAdversaries.${target.dataset.categoryId}`]: _del });
     }
 
     /**

@@ -118,7 +118,7 @@ export default class DhSceneConfigSettings extends foundry.applications.sheets.S
 
         for (const key of Object.keys(this.document._source.flags.daggerheart?.sceneEnvironments ?? {})) {
             if (!submitData.flags.daggerheart.sceneEnvironments[key]) {
-                submitData.flags.daggerheart.sceneEnvironments[`-=${key}`] = null;
+                submitData.flags.daggerheart.sceneEnvironments[key] = _del;
             }
         }
 

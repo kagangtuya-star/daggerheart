@@ -48,7 +48,7 @@ export default class DhParty extends BaseDataActor {
             initiator: this.partyMembers.some(x => x.id === tagTeam.initiator) ? null : tagTeam.initiator,
             members: Object.keys(tagTeam.members).reduce((acc, key) => {
                 if (this.partyMembers.find(x => x.id === key)) {
-                    acc[`-=${key}`] = null;
+                    acc[key] = _del;
                 }
 
                 return acc;

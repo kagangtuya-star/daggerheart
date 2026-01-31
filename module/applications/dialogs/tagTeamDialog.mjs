@@ -168,7 +168,7 @@ export default class TagTeamDialog extends HandlebarsApplicationMixin(Applicatio
     }
 
     static async #removeMember(_, button) {
-        const update = { [`members.-=${button.dataset.characterId}`]: null };
+        const update = { [`members.${button.dataset.characterId}`]: _del };
         if (this.data.initiator.id === button.dataset.characterId) {
             update.iniator = { id: null };
         }

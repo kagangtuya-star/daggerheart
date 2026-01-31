@@ -100,7 +100,7 @@ export default class BeastformEffect extends BaseEffect {
                                 token.flags.daggerheart?.beastformSubjectTexture ?? this.characterTokenData.tokenRingImg
                         }
                     },
-                    'flags.daggerheart': { '-=beastformTokenImg': null, '-=beastformSubjectTexture': null }
+                    'flags.daggerheart': { beastformTokenImg: _del, beastformSubjectTexture: _del }
                 };
             };
 

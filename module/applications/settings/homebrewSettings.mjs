@@ -228,7 +228,7 @@ export default class DhHomebrewSettings extends HandlebarsApplicationMixin(Appli
         const isDowntime = ['shortRest', 'longRest'].includes(type);
         const path = isDowntime ? `restMoves.${type}.moves` : `itemFeatures.${type}`;
         await this.settings.updateSource({
-            [`${path}.-=${id}`]: null
+            [`${path}.${id}`]: _del
         });
         this.render();
     }
@@ -250,7 +250,7 @@ export default class DhHomebrewSettings extends HandlebarsApplicationMixin(Appli
         const fields = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Homebrew).schema.fields;
 
         const removeUpdate = Object.keys(this.settings.restMoves[target.dataset.type].moves).reduce((acc, key) => {
-            acc[`-=${key}`] = null;
+            acc[key] = _del;
 
             return acc;
         }, {});
@@ -310,7 +310,7 @@ export default class DhHomebrewSettings extends HandlebarsApplicationMixin(Appli
             [`itemFeatures.${target.dataset.type}`]: Object.keys(
                 this.settings.itemFeatures[target.dataset.type]
             ).reduce((acc, key) => {
-                acc[`-=${key}`] = null;
+                acc[key] = _del;
 
                 return acc;
             }, {})
@@ -383,12 +383,12 @@ export default class DhHomebrewSettings extends HandlebarsApplicationMixin(Appli
         if (!confirmed) return;
 
         await this.settings.updateSource({
-            [`domains.-=${this.selected.domain}`]: null
+            [`domains.${this.selected.domain}`]: _del
         });
 
         const currentSettings = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Homebrew);
         if (currentSettings.domains[this.selected.domain]) {
-            await currentSettings.updateSource({ [`domains.-=${this.selected.domain}`]: null });
+            await currentSettings.updateSource({ [`domains.${this.selected.domain}`]: _del });
             await game.settings.set(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Homebrew, currentSettings);
         }
 
@@ -435,7 +435,7 @@ export default class DhHomebrewSettings extends HandlebarsApplicationMixin(Appli
 
     static async deleteAdversaryType(_, target) {
         const { key } = target.dataset;
-        await this.settings.updateSource({ [`adversaryTypes.-=${key}`]: null });
+        await this.settings.updateSource({ [`adversaryTypes.${key}`]: _del });
 
         this.selected.adversaryType = this.selected.adversaryType === key ? null : this.selected.adversaryType;
         this.render();

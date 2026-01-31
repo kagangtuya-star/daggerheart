@@ -171,10 +171,10 @@ export const getDeleteKeys = (property, innerProperty, innerPropertyDefaultValue
                     [innerProperty]: innerPropertyDefaultValue
                 };
             } else {
-                acc[`${key}.-=${innerProperty}`] = null;
+                acc[`${key}.${innerProperty}`] = _del;
             }
         } else {
-            acc[`-=${key}`] = null;
+            acc[`${key}`] = _del;
         }
 
         return acc;

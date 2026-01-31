@@ -243,11 +243,11 @@ export function ActionMixin(Base) {
                 : foundry.utils.getProperty(result, basePath);
         }
 
-        delete() {
+        async delete() {
             if (!this.inCollection) return this.item;
             const action = foundry.utils.getProperty(this.item, `system.${this.systemPath}`)?.get(this.id);
             if (!action) return this.item;
-            this.item.update({ [`system.${this.systemPath}.-=${this.id}`]: null });
+            await this.item.update({ [`system.${this.systemPath}.${this.id}`]: _del }); // Does not work. Unsure why. It worked in v13 <_<'
             this.constructor._sheets.get(this.uuid)?.close();
         }
 

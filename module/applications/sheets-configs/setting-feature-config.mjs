@@ -206,7 +206,7 @@ export default class SettingFeatureConfig extends HandlebarsApplicationMixin(App
                 }
             });
         } else {
-            await this.settings.updateSource({ [`${this.actionsPath}.-=${target.dataset.id}`]: null });
+            await this.settings.updateSource({ [`${this.actionsPath}.${target.dataset.id}`]: _del });
         }
 
         this.move = foundry.utils.getProperty(this.settings, this.movePath);

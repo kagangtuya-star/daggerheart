@@ -169,9 +169,7 @@ export default class BaseDataActor extends foundry.abstract.TypeDataModel {
             const tagTeam = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.TagTeamRoll);
             await tagTeam.updateSource({
                 initiator: this.parent.id === tagTeam.initiator ? null : tagTeam.initiator,
-                members: Object.keys(tagTeam.members).find(x => x === this.parent.id)
-                    ? { [`-=${this.parent.id}`]: null }
-                    : {}
+                members: Object.keys(tagTeam.members).find(x => x === this.parent.id) ? { [this.parent.id]: _del } : {}
             });
             await game.settings.set(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.TagTeamRoll, tagTeam);
         }
