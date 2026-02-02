@@ -116,7 +116,7 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
     }
 
     static getChangeValue(model, change, effect) {
-        let key = change.value;
+        let key = change.value.toString();
         const isOriginTarget = key.toLowerCase().includes('origin.@');
         let parseModel = model;
         if (isOriginTarget && effect.origin) {
