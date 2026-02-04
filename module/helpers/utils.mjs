@@ -500,3 +500,12 @@ export function htmlToText(html) {
 
     return tempDivElement.textContent || tempDivElement.innerText || '';
 }
+
+export function getIconVisibleActiveEffects(effects) {
+    return effects.filter(effect => {
+        const alwaysShown = effect.showIcon === CONST.ACTIVE_EFFECT_SHOW_ICON.ALWAYS;
+        const conditionalShown = effect.showIcon === CONST.ACTIVE_EFFECT_SHOW_ICON.CONDITIONAL && !effect.transfer; // TODO: system specific logic
+
+        return !effect.disabled && (alwaysShown || conditionalShown);
+    });
+}

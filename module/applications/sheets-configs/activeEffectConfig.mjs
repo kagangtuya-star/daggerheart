@@ -151,12 +151,15 @@ export default class DhActiveEffectConfig extends foundry.applications.sheets.Ac
                 index,
                 defaultPriority
             ) ??
-            renderTemplate('systems/daggerheart/templates/sheets/activeEffect/change.hbs', {
-                change,
-                index,
-                defaultPriority,
-                fields
-            })
+            foundry.applications.handlebars.renderTemplate(
+                'systems/daggerheart/templates/sheets/activeEffect/change.hbs',
+                {
+                    change,
+                    index,
+                    defaultPriority,
+                    fields
+                }
+            )
         );
     }
 }

@@ -4,7 +4,12 @@
     {{formGroup fields.disabled value=source.disabled rootId=rootId}}
 
     {{#if isActorEffect}}
-        {{formGroup fields.origin value=source.origin rootId=rootId disabled=true}}
+        <div class="form-group">
+            <label>{{localize "EFFECT.FIELDS.origin.label"}}</label>
+            <div class="form-fields">
+                <input type="text" value="{{source.origin}}" disabled />
+            </div>
+        </div>
     {{/if}}
     
     {{#if isItemEffect}}
