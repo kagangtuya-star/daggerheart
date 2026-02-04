@@ -14,7 +14,9 @@
             "beastform": "Beastform"
         },
         "ActiveEffect": {
-            "beastform": "Beastform"
+            "base": "Standard",
+            "beastform": "Beastform",
+            "horde": "Horde"
         },
         "Actor": {
             "character": "Character",

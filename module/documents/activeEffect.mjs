@@ -54,6 +54,37 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
     /*  Event Handlers                              */
     /* -------------------------------------------- */
 
+    /** @inheritdoc */
+    static async createDialog(data = {}, createOptions = {}, options = {}) {
+        const { folders, types, template, context = {}, ...dialogOptions } = options;
+
+        if (types?.length === 0) {
+            throw new Error('The array of sub-types to restrict to must not be empty.');
+        }
+
+        const creatableEffects = ['base'];
+        const documentTypes = this.TYPES.filter(type => creatableEffects.includes(type)).map(type => {
+            const labelKey = `TYPES.ActiveEffect.${type}`;
+            const label = game.i18n.has(labelKey) ? game.i18n.localize(labelKey) : type;
+
+            return { value: type, label };
+        });
+
+        if (!documentTypes.length) {
+            throw new Error('No document types were permitted to be created.');
+        }
+
+        const sortedTypes = documentTypes.sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang));
+
+        return await super.createDialog(data, createOptions, {
+            folders,
+            types,
+            template,
+            context: { types: sortedTypes, ...context },
+            ...dialogOptions
+        });
+    }
+
     /**@inheritdoc*/
     async _preCreate(data, options, user) {
         const update = {};
