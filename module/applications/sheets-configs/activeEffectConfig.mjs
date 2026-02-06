@@ -4,20 +4,34 @@ export default class DhActiveEffectConfig extends foundry.applications.sheets.Ac
     constructor(options) {
         super(options);
 
-        const ignoredActorKeys = ['config', 'DhEnvironment'];
+        const ignoredActorKeys = ['config', 'DhEnvironment', 'DhParty'];
         this.changeChoices = Object.keys(game.system.api.models.actors).reduce((acc, key) => {
-            if (!ignoredActorKeys.includes(key)) {
-                const model = game.system.api.models.actors[key];
-                const attributes = CONFIG.Token.documentClass.getTrackedAttributes(model);
-                // As per DHToken._getTrackedAttributesFromSchema, attributes.bar have a max version as well.
-                const maxAttributes = attributes.bar.map(x => [...x, 'max']);
-                attributes.value.push(...maxAttributes);
-                const group = game.i18n.localize(model.metadata.label);
-                const choices = CONFIG.Token.documentClass
-                    .getTrackedAttributeChoices(attributes, model)
-                    .map(x => ({ ...x, group: group }));
-                acc.push(...choices);
-            }
+            if (ignoredActorKeys.includes(key)) return acc;
+
+            const model = game.system.api.models.actors[key];
+            const group = game.i18n.localize(model.metadata.label);
+            const attributes = CONFIG.Token.documentClass.getTrackedAttributes(model.metadata.type);
+
+            const getLabel = path => {
+                const label = model.schema.getField(path)?.label;
+                return label ? game.i18n.localize(label) : path;
+            };
+
+            const bars = attributes.bar.flatMap(x => {
+                const joined = `${x.join('.')}.max`;
+                const label =
+                    joined === 'resources.hope.max'
+                        ? 'DAGGERHEART.SETTINGS.Homebrew.FIELDS.maxHope.label'
+                        : getLabel(joined);
+                return { value: joined, label, group };
+            });
+            const values = attributes.value.flatMap(x => {
+                const joined = x.join('.');
+                return { value: joined, label: getLabel(joined), group };
+            });
+
+            acc.push(...bars, ...values);
+
             return acc;
         }, []);
     }
@@ -68,14 +82,18 @@ export default class DhActiveEffectConfig extends foundry.applications.sheets.Ac
                 },
                 render: function (item, search) {
                     const label = game.i18n.localize(item.label);
-                    const matchIndex = label.toLowerCase().indexOf(search);
+                    const matchIndex = label.toLowerCase().indexOf(search.toLowerCase());
 
                     const beforeText = label.slice(0, matchIndex);
                     const matchText = label.slice(matchIndex, matchIndex + search.length);
                     const after = label.slice(matchIndex + search.length, label.length);
 
                     const element = document.createElement('li');
-                    element.innerHTML = `${beforeText}${matchText ? `<strong>${matchText}</strong>` : ''}${after}`;
+                    element.innerHTML =
+                        `${beforeText}${matchText ? `<strong>${matchText}</strong>` : ''}${after}`.replaceAll(
+                            ' ',
+                            '&nbsp;'
+                        );
                     if (item.hint) {
                         element.dataset.tooltip = game.i18n.localize(item.hint);
                     }
