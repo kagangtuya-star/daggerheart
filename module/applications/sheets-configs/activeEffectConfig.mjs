@@ -5,6 +5,24 @@ export default class DhActiveEffectConfig extends foundry.applications.sheets.Ac
         super(options);
 
         const ignoredActorKeys = ['config', 'DhEnvironment', 'DhParty'];
+
+        const getAllLeaves = (root, group, parentPath = '') => {
+            const leaves = [];
+            const rootKey = `${parentPath ? `${parentPath}.` : ''}${root.name}`;
+            for (const field of Object.values(root.fields)) {
+                if (field instanceof foundry.data.fields.SchemaField)
+                    leaves.push(...getAllLeaves(field, group, rootKey));
+                else
+                    leaves.push({
+                        value: `${rootKey}.${field.name}`,
+                        label: game.i18n.localize(field.label),
+                        hint: game.i18n.localize(field.hint),
+                        group
+                    });
+            }
+
+            return leaves;
+        };
         this.changeChoices = Object.keys(game.system.api.models.actors).reduce((acc, key) => {
             if (ignoredActorKeys.includes(key)) return acc;
 
@@ -30,7 +48,10 @@ export default class DhActiveEffectConfig extends foundry.applications.sheets.Ac
                 return { value: joined, label: getLabel(joined), group };
             });
 
-            acc.push(...bars, ...values);
+            const bonuses = getAllLeaves(model.schema.fields.bonuses, group);
+            const rules = getAllLeaves(model.schema.fields.rules, group);
+
+            acc.push(...bars, ...values, ...rules, ...bonuses);
 
             return acc;
         }, []);
