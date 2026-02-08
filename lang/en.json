@@ -2613,6 +2613,8 @@
                 "resetMovesTitle": "Reset {type} Downtime Moves",
                 "resetItemFeaturesTitle": "Reset {type}",
                 "resetMovesText": "Are you sure you want to reset?",
+                "deleteItemTitle": "Delete Homebrew Item",
+                "deleteItemText": "Are you sure you want to delete the item?",
                 "FIELDS": {
                     "maxFear": { "label": "Max Fear" },
                     "maxHope": { "label": "Max Hope" },
