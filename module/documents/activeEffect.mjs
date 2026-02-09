@@ -114,6 +114,11 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
         super.applyField(model, change, field);
     }
 
+    _applyLegacy(actor, change, changes) {
+        change.value = DhActiveEffect.getChangeValue(actor, change, change.effect);
+        super._applyLegacy(actor, change, changes);
+    }
+
     /** */
     static getChangeValue(model, change, effect) {
         let value = change.value;
