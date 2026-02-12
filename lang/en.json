@@ -355,7 +355,8 @@
             "CompendiumBrowserSettings": {
                 "title": "Enable Compendiums",
                 "enableSource": "Enable Source",
-                "disableSource": "Disable Source"
+                "disableSource": "Disable Source",
+                "worldCompendiums": "World Compendiums"
             },
             "ContextMenu": {
                 "disableEffect": "Disable Effect",
