@@ -885,3 +885,34 @@ export const activeEffectModes = {
         label: 'EFFECT.CHANGES.TYPES.override'
     }
 };
+
+export const activeEffectDurations = {
+    temporary: {
+        id: 'temporary',
+        label: 'DAGGERHEART.CONFIG.ActiveEffectDuration.temporary'
+    },
+    act: {
+        id: 'act',
+        label: 'DAGGERHEART.CONFIG.ActiveEffectDuration.act'
+    },
+    scene: {
+        id: 'scene',
+        label: 'DAGGERHEART.CONFIG.ActiveEffectDuration.scene'
+    },
+    shortRest: {
+        id: 'shortRest',
+        label: 'DAGGERHEART.CONFIG.ActiveEffectDuration.shortRest'
+    },
+    longRest: {
+        id: 'longRest',
+        label: 'DAGGERHEART.CONFIG.ActiveEffectDuration.longRest'
+    },
+    session: {
+        id: 'session',
+        label: 'DAGGERHEART.CONFIG.ActiveEffectDuration.session'
+    },
+    custom: {
+        id: 'custom',
+        label: 'DAGGERHEART.CONFIG.ActiveEffectDuration.custom'
+    }
+};
