@@ -59,6 +59,8 @@ CONFIG.Canvas.layers.tokens.layerClass = DhTokenLayer;
 
 CONFIG.MeasuredTemplate.objectClass = placeables.DhMeasuredTemplate;
 
+CONFIG.Region.objectClass = placeables.DhRegion;
+
 CONFIG.RollTable.documentClass = documents.DhRollTable;
 CONFIG.RollTable.resultTemplate = 'systems/daggerheart/templates/ui/chat/table-result.hbs';
 

@@ -1222,8 +1222,8 @@
                 "cone": "Cone",
                 "emanation": "Emanation",
                 "inFront": "In Front",
-                "rect": "Rectangle",
-                "ray": "Ray"
+                "rectangle": "Rectangle",
+                "line": "Line"
             },
             "TokenSize": {
                 "tiny": "Tiny",
