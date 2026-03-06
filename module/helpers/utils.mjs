@@ -558,6 +558,13 @@ export function calculateExpectedValue(formulaOrTerms) {
     return terms.reduce((r, t) => r + (t.bonus ?? 0) + (t.diceQuantity ? (t.diceQuantity * (t.faces + 1)) / 2 : 0), 0);
 }
 
+export function parseRallyDice(value, effect) {
+    const legacyStartsWithPrefix = value.toLowerCase().startsWith('d');
+    const workingValue = legacyStartsWithPrefix ? value.slice(1) : value;
+    const dataParsedValue = itemAbleRollParse(workingValue, effect.parent);
+
+    return `d${game.system.api.documents.DhActiveEffect.effectSafeEval(dataParsedValue)}`;
+}
 /**
  * Refreshes character and/or adversary resources.
  * @param { string[] } refreshTypes Which type of features to refresh using IDs from CONFIG.DH.GENERAL.refreshTypes
