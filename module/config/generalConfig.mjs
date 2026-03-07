@@ -245,8 +245,8 @@ export const defaultRestOptions = {
                         type: 'friendly'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            hitPoints: {
                                 applyTo: healingTypes.hitPoints.id,
                                 value: {
                                     custom: {
@@ -255,7 +255,7 @@ export const defaultRestOptions = {
                                     }
                                 }
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -279,8 +279,8 @@ export const defaultRestOptions = {
                         type: 'self'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            stress: {
                                 applyTo: healingTypes.stress.id,
                                 value: {
                                     custom: {
@@ -289,7 +289,7 @@ export const defaultRestOptions = {
                                     }
                                 }
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -314,8 +314,8 @@ export const defaultRestOptions = {
                         type: 'friendly'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            armor: {
                                 applyTo: healingTypes.armor.id,
                                 value: {
                                     custom: {
@@ -324,7 +324,7 @@ export const defaultRestOptions = {
                                     }
                                 }
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -348,8 +348,8 @@ export const defaultRestOptions = {
                         type: 'self'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            hope: {
                                 applyTo: healingTypes.hope.id,
                                 value: {
                                     custom: {
@@ -358,7 +358,7 @@ export const defaultRestOptions = {
                                     }
                                 }
                             }
-                        ]
+                        }
                     }
                 },
                 prepareWithFriends: {
@@ -372,8 +372,8 @@ export const defaultRestOptions = {
                         type: 'self'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            hope: {
                                 applyTo: healingTypes.hope.id,
                                 value: {
                                     custom: {
@@ -382,7 +382,7 @@ export const defaultRestOptions = {
                                     }
                                 }
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -409,8 +409,8 @@ export const defaultRestOptions = {
                         type: 'friendly'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            hitPoints: {
                                 applyTo: healingTypes.hitPoints.id,
                                 value: {
                                     custom: {
@@ -419,7 +419,7 @@ export const defaultRestOptions = {
                                     }
                                 }
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -443,8 +443,8 @@ export const defaultRestOptions = {
                         type: 'self'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            stress: {
                                 applyTo: healingTypes.stress.id,
                                 value: {
                                     custom: {
@@ -453,7 +453,7 @@ export const defaultRestOptions = {
                                     }
                                 }
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -478,8 +478,8 @@ export const defaultRestOptions = {
                         type: 'friendly'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            armor: {
                                 applyTo: healingTypes.armor.id,
                                 value: {
                                     custom: {
@@ -488,7 +488,7 @@ export const defaultRestOptions = {
                                     }
                                 }
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -512,8 +512,8 @@ export const defaultRestOptions = {
                         type: 'self'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            hope: {
                                 applyTo: healingTypes.hope.id,
                                 value: {
                                     custom: {
@@ -522,7 +522,7 @@ export const defaultRestOptions = {
                                     }
                                 }
                             }
-                        ]
+                        }
                     }
                 },
                 prepareWithFriends: {
@@ -536,8 +536,8 @@ export const defaultRestOptions = {
                         type: 'self'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            hope: {
                                 applyTo: healingTypes.hope.id,
                                 value: {
                                     custom: {
@@ -546,7 +546,7 @@ export const defaultRestOptions = {
                                     }
                                 }
                             }
-                        ]
+                        }
                     }
                 }
             },

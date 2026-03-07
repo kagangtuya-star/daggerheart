@@ -63,15 +63,15 @@ export default class DHWeapon extends AttachableItem {
                         type: 'attack'
                     },
                     damage: {
-                        parts: [
-                            {
+                        parts: {
+                            hitPoints: {
                                 type: ['physical'],
                                 value: {
                                     multiplier: 'prof',
                                     dice: 'd8'
                                 }
                             }
-                        ]
+                        }
                     }
                 }
             }),

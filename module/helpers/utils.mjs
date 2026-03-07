@@ -722,3 +722,16 @@ export async function RefreshFeatures(
 
     return refreshedActors;
 }
+
+export function getUnusedDamageTypes(parts) {
+    const usedKeys = Object.keys(parts);
+    return Object.keys(CONFIG.DH.GENERAL.healingTypes).reduce((acc, key) => {
+        if (!usedKeys.includes(key))
+            acc.push({
+                value: key,
+                label: game.i18n.localize(CONFIG.DH.GENERAL.healingTypes[key].label)
+            });
+
+        return acc;
+    }, []);
+}
