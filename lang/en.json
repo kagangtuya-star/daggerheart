@@ -74,6 +74,15 @@
                     "invalidDrop": "You can only drop Actor entities to summon.",
                     "chatMessageTitle": "Test2",
                     "chatMessageHeaderTitle": "Summoning"
+                },
+                "transform": {
+                    "name": "Transform",
+                    "tooltip": "Transform one actor into another",
+                    "noTransformActor": "There is no assigned actor to transform into",
+                    "transformActorMissing": "The assigned actor to transform into does not exist. It was probably deleted or moved in/out of a compendium",
+                    "canvasError": "There is no active scene.",
+                    "prototypeError": "You can only use a transform action from a Token",
+                    "actorLinkError": "You cannot transform a token with Actor Link set to true"
                 }
             },
             "Config": {
@@ -129,6 +138,12 @@
                 },
                 "summon": {
                     "dropSummonsHere": "Drop Summons Here"
+                },
+                "transform": {
+                    "dropTransformHere": "Drop Transform Here",
+                    "actorIsMissing": "The linked actor is missing. You should delete this link.",
+                    "clearHitPoints": "Clear Hitpoints",
+                    "clearStress": "Clear Stress"
                 }
             }
         },
