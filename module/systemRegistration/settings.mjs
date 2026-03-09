@@ -144,7 +144,7 @@ const registerNonConfigSettings = () => {
     });
 
     game.settings.register(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.CompendiumBrowserSettings, {
-        scope: 'client',
+        scope: 'world',
         config: false,
         type: CompendiumBrowserSettings
     });
