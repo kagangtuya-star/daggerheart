@@ -89,8 +89,10 @@ export default class DHSummonField extends fields.SchemaField {
 
     /* Check for any available instances of the actor present in the world, or create a world actor based on compendium */
     static async getWorldActor(baseActor) {
+        if (!baseActor.inCompendium) return baseActor;
+
         const dataType = game.system.api.data.actors[`Dh${baseActor.type.capitalize()}`];
-        if (baseActor.inCompendium && dataType && baseActor.img === dataType.DEFAULT_ICON) {
+        if (dataType && baseActor.img === dataType.DEFAULT_ICON) {
             const worldActorCopy = game.actors.find(x => x.name === baseActor.name);
             if (worldActorCopy) return worldActorCopy;
         }
