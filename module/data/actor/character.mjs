@@ -721,7 +721,8 @@ export default class DhCharacter extends DhCreature {
             const newHopeMax = this.system.resources.hope.max + diff;
             const newHopeValue = Math.min(newHopeMax, this.system.resources.hope.value);
             if (newHopeValue != this.system.resources.hope.value) {
-                if (!changes.system.resources) changes.system.resources = { hope: { value: 0 } };
+                if (!changes.system.resources.hope) changes.system.resources.hope = { value: 0 };
+
                 changes.system.resources.hope = {
                     ...changes.system.resources.hope,
                     value: changes.system.resources.hope.value + newHopeValue
