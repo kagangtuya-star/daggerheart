@@ -29,6 +29,7 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
             removeEffect: this.removeEffect,
             addElement: this.addElement,
             removeElement: this.removeElement,
+            removeTransformActor: this.removeTransformActor,
             editEffect: this.editEffect,
             addDamage: this.addDamage,
             removeDamage: this.removeDamage,
@@ -42,7 +43,7 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
             submitOnChange: true,
             closeOnSubmit: false
         },
-        dragDrop: [{ dragSelector: null, dropSelector: '#summon-drop-zone', handlers: ['_onDrop'] }]
+        dragDrop: [{ dragSelector: null, dropSelector: '[data-is-drop-zone]', handlers: ['_onDrop'] }]
     };
 
     static PARTS = {
@@ -121,6 +122,10 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
         htmlElement.querySelectorAll('.summon-count-wrapper input').forEach(element => {
             element.addEventListener('change', this.updateSummonCount.bind(this));
         });
+
+        htmlElement.querySelectorAll('.transform-resource input').forEach(element => {
+            element.addEventListener('change', this.updateTransformResource.bind(this));
+        });
     }
 
     async _prepareContext(_options) {
@@ -132,6 +137,18 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
         for (const summon of context.source.summon ?? []) {
             const actor = await foundry.utils.fromUuid(summon.actorUUID);
             context.summons.push({ actor, count: summon.count });
+        }
+
+        if (context.source.transform) {
+            const actor = await foundry.utils.fromUuid(context.source.transform.actorUUID);
+            context.transform = {
+                ...context.source.transform,
+                actor:
+                    actor ??
+                    (context.source.transform.actorUUID && !actor
+                        ? { error: game.i18n.localize('DAGGERHEART.ACTIONS.Settings.transform.actorIsMissing') }
+                        : null)
+            };
         }
 
         context.openSection = this.openSection;
@@ -268,6 +285,12 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
         if (doc) return doc.sheet.render({ force: true });
     }
 
+    static async removeTransformActor() {
+        const data = this.action.toObject();
+        data.transform.actorUUID = null;
+        this.constructor.updateForm.bind(this)(null, null, { object: foundry.utils.flattenObject(data) });
+    }
+
     static addDamage(_event) {
         if (!this.action.damage.parts) return;
 
@@ -324,7 +347,7 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
         const data = this.action.toObject();
         const key = button.dataset.key;
         delete data.damage.parts[key];
-        data.damage.parts[`-=${key}`] = null;
+        data.damage.parts[`${key}`] = _del;
         this.constructor.updateForm.bind(this)(null, null, { object: foundry.utils.flattenObject(data) });
     }
 
@@ -391,6 +414,14 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
         this.constructor.updateForm.bind(this)(null, null, { object: foundry.utils.flattenObject(data) });
     }
 
+    updateTransformResource(event) {
+        event.stopPropagation();
+
+        const data = this.action.toObject();
+        data.transform.resourceRefresh[event.target.dataset.resource] = event.target.checked;
+        this.constructor.updateForm.bind(this)(null, null, { object: foundry.utils.flattenObject(data) });
+    }
+
     /** Specific implementation in extending classes **/
     static async addEffect(_event) {}
     static removeEffect(_event, _button) {}
@@ -409,6 +440,18 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
             return;
         }
 
+        const dropZone = event.target.closest('[data-is-drop-zone]');
+        if (!dropZone) return;
+
+        switch (dropZone.id) {
+            case 'summon-drop-zone':
+                return this.onSummonDrop(data);
+            case 'transform-drop-zone':
+                return this.onTransformDrop(data);
+        }
+    }
+
+    async onSummonDrop(data) {
         const actionData = this.action.toObject();
         let countvalue = 1;
         for (const entry of actionData.summon) {
@@ -423,6 +466,12 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
         }
 
         actionData.summon.push({ actorUUID: data.uuid, count: countvalue });
+        await this.constructor.updateForm.bind(this)(null, null, { object: foundry.utils.flattenObject(actionData) });
+    }
+
+    async onTransformDrop(data) {
+        const actionData = this.action.toObject();
+        actionData.transform.actorUUID = data.uuid;
         await this.constructor.updateForm.bind(this)(null, null, { object: foundry.utils.flattenObject(actionData) });
     }
 }
