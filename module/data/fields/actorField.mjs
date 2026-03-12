@@ -21,7 +21,7 @@ const bonusField = label =>
         dice: new fields.ArrayField(new fields.StringField(), { label: `${game.i18n.localize(label)} Dice` })
     });
 
-/** 
+/**
  * Field used for actor resources. It is a resource that validates dynamically based on the config.
  * Because "max" may be defined during runtime, we don't attempt to clamp the maximum value.
  */
@@ -78,7 +78,7 @@ class ResourcesField extends fields.TypedObjectField {
             const resource = resources[key];
             value.label = resource.label;
             value.isReversed = resources[key].reverse;
-            value.max = typeof resource.max === 'number' ? value.max ?? resource.max : null;
+            value.max = typeof resource.max === 'number' ? (value.max ?? resource.max) : null;
         }
         return data;
     }
