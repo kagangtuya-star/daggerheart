@@ -309,7 +309,7 @@ export function ActionMixin(Base) {
                 }
             };
 
-            ChatMessage.applyRollMode(msg, game.settings.get('core', 'rollMode'));
+            ChatMessage.applyMode(msg, game.settings.get('core', 'messageMode'));
             cls.create(msg);
         }
     }
