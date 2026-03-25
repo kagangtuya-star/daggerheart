@@ -80,7 +80,20 @@ export default class BaseEffect extends foundry.data.ActiveEffectTypeDataModel {
                     initial: CONFIG.DH.GENERAL.range.melee.id,
                     label: 'DAGGERHEART.GENERAL.range'
                 })
-            })
+            }),
+            stacking: new fields.SchemaField(
+                {
+                    value: new fields.NumberField({
+                        initial: 1,
+                        min: 1,
+                        integer: true,
+                        nullable: false,
+                        label: 'DAGGERHEART.GENERAL.value'
+                    }),
+                    max: new fields.NumberField({ integer: true, label: 'DAGGERHEART.GENERAL.max' })
+                },
+                { nullable: true, initial: null }
+            )
         };
     }
 

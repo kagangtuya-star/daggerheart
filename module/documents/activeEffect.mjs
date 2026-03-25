@@ -108,6 +108,18 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
             update.img = 'icons/magic/life/heart-cross-blue.webp';
         }
 
+        const existingEffect = this.actor.effects.find(x => x.origin === data.origin);
+        const stacks = Boolean(data.system?.stacking);
+        if (existingEffect && !stacks) return false;
+
+        if (existingEffect && stacks) {
+            const incrementedValue = existingEffect.system.stacking.value + 1;
+            await existingEffect.update({
+                'system.stacking.value': Math.min(incrementedValue, existingEffect.system.stacking.max ?? Infinity)
+            });
+            return false;
+        }
+
         const statuses = Object.keys(data.statuses ?? {});
         const immuneStatuses =
             statuses.filter(
@@ -184,7 +196,10 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
             } catch (_) {}
         }
 
-        const evalValue = this.effectSafeEval(itemAbleRollParse(key, parseModel, effect.parent));
+        const stackingParsedValue = effect.system.stacking
+            ? Roll.replaceFormulaData(key, { stacks: effect.system.stacking.value })
+            : key;
+        const evalValue = itemAbleRollParse(stackingParsedValue, parseModel, effect.parent);
         return evalValue ?? key;
     }
 
