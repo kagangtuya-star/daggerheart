@@ -318,6 +318,9 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
             const type = choices[button.form.elements.type.value].value;
             const part = this.action.schema.fields.damage.fields.parts.element.getInitialValue();
             part.applyTo = type;
+            if (type === CONFIG.DH.GENERAL.healingTypes.hitPoints.id)
+                part.type = this.action.schema.fields.damage.fields.parts.element.fields.type.element.initial;
+
             data.damage.parts[type] = part;
             this.constructor.updateForm.bind(this)(null, null, { object: foundry.utils.flattenObject(data) });
         };
