@@ -108,37 +108,41 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
             update.img = 'icons/magic/life/heart-cross-blue.webp';
         }
 
-        const existingEffect = this.actor.effects.find(x => x.origin === data.origin);
-        const stacks = Boolean(data.system?.stacking);
-        if (existingEffect && !stacks) return false;
+        if (this.actor) {
+            const existingEffect = this.actor.effects.find(x => x.origin === data.origin);
+            const stacks = Boolean(data.system?.stacking);
+            if (existingEffect && !stacks) return false;
 
-        if (existingEffect && stacks) {
-            const incrementedValue = existingEffect.system.stacking.value + 1;
-            await existingEffect.update({
-                'system.stacking.value': Math.min(incrementedValue, existingEffect.system.stacking.max ?? Infinity)
-            });
-            return false;
+            if (existingEffect && stacks) {
+                const incrementedValue = existingEffect.system.stacking.value + 1;
+                await existingEffect.update({
+                    'system.stacking.value': Math.min(incrementedValue, existingEffect.system.stacking.max ?? Infinity)
+                });
+                return false;
+            }
         }
 
-        const statuses = Object.keys(data.statuses ?? {});
-        const immuneStatuses =
-            statuses.filter(
-                status =>
-                    this.parent.system.rules?.conditionImmunities &&
-                    this.parent.system.rules.conditionImmunities[status]
-            ) ?? [];
-        if (immuneStatuses.length > 0) {
-            update.statuses = statuses.filter(x => !immuneStatuses.includes(x));
-            const conditions = CONFIG.DH.GENERAL.conditions();
-            const scrollingTexts = immuneStatuses.map(status => ({
-                text: game.i18n.format('DAGGERHEART.ACTIVEEFFECT.immuneStatusText', {
-                    status: game.i18n.localize(conditions[status].name)
-                })
-            }));
-            if (update.statuses.length > 0) {
-                setTimeout(() => scrollingTexts, 500);
-            } else {
-                this.parent.queueScrollText(scrollingTexts);
+        if (this.parent) {
+            const statuses = Object.keys(data.statuses ?? {});
+            const immuneStatuses =
+                statuses.filter(
+                    status =>
+                        this.parent.system.rules?.conditionImmunities &&
+                        this.parent.system.rules.conditionImmunities[status]
+                ) ?? [];
+            if (immuneStatuses.length > 0) {
+                update.statuses = statuses.filter(x => !immuneStatuses.includes(x));
+                const conditions = CONFIG.DH.GENERAL.conditions();
+                const scrollingTexts = immuneStatuses.map(status => ({
+                    text: game.i18n.format('DAGGERHEART.ACTIVEEFFECT.immuneStatusText', {
+                        status: game.i18n.localize(conditions[status].name)
+                    })
+                }));
+                if (update.statuses.length > 0) {
+                    setTimeout(() => scrollingTexts, 500);
+                } else {
+                    this.parent.queueScrollText(scrollingTexts);
+                }
             }
         }
 
