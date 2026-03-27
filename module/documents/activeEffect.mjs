@@ -1,5 +1,4 @@
 import { itemAbleRollParse } from '../helpers/utils.mjs';
-import { RefreshType } from '../systemRegistration/socket.mjs';
 
 export default class DhActiveEffect extends foundry.documents.ActiveEffect {
     /* -------------------------------------------- */
@@ -108,7 +107,7 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
             update.img = 'icons/magic/life/heart-cross-blue.webp';
         }
 
-        if (this.actor) {
+        if (this.actor && data.origin) {
             const existingEffect = this.actor.effects.find(x => x.origin === data.origin);
             const stacks = Boolean(data.system?.stacking);
             if (existingEffect && !stacks) return false;
@@ -151,20 +150,6 @@ export default class DhActiveEffect extends foundry.documents.ActiveEffect {
         }
 
         await super._preCreate(data, options, user);
-    }
-
-    /** @inheritdoc */
-    _onCreate(data, options, userId) {
-        super._onCreate(data, options, userId);
-
-        Hooks.callAll(RefreshType.EffectsDisplay);
-    }
-
-    /** @inheritdoc */
-    _onDelete(data, options, userId) {
-        super._onDelete(data, options, userId);
-
-        Hooks.callAll(RefreshType.EffectsDisplay);
     }
 
     /* -------------------------------------------- */
