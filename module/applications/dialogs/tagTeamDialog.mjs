@@ -453,7 +453,8 @@ export default class TagTeamDialog extends HandlebarsApplicationMixin(Applicatio
         const { parsedRoll, newRoll } = await game.system.api.dice.DualityRoll.reroll(
             memberData.rollData,
             dieIndex,
-            diceType
+            diceType,
+            false
         );
         const rollData = parsedRoll.toJSON();
         this.updatePartyData(

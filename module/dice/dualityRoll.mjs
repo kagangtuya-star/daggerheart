@@ -305,7 +305,6 @@ export default class DualityRoll extends D20Roll {
             !config.source?.actor ||
             (game.user.isGM ? !hopeFearAutomation.gm : !hopeFearAutomation.players) ||
             config.actionType === 'reaction' ||
-            config.tagTeamSelected ||
             config.skips?.resources
         )
             return;
@@ -346,7 +345,6 @@ export default class DualityRoll extends D20Roll {
         if (
             automationSettings.countdownAutomation &&
             config.actionType !== 'reaction' &&
-            !config.tagTeamSelected &&
             !config.skips?.updateCountdowns
         ) {
             const { updateCountdowns } = game.system.api.applications.ui.DhCountdowns;
@@ -374,7 +372,7 @@ export default class DualityRoll extends D20Roll {
         }
     }
 
-    static async reroll(rollBase, dieIndex, diceType) {
+    static async reroll(rollBase, dieIndex, diceType, updateResources = true) {
         let parsedRoll = game.system.api.dice.DualityRoll.fromData({ ...rollBase, evaluated: false });
         const term = parsedRoll.terms[dieIndex];
         await term.reroll(`/r1=${term.total}`);
@@ -421,12 +419,14 @@ export default class DualityRoll extends D20Roll {
             source: { actor: parsedRoll.options.source.actor ?? '' },
             targets: parsedRoll.targets,
             roll: newRoll,
-            rerolledRoll: parsedRoll.roll,
+            rerolledRoll: parsedRoll.options.roll,
             resourceUpdates: new ResourceUpdateMap(actor)
         };
 
-        await DualityRoll.addDualityResourceUpdates(config);
-        await config.resourceUpdates.updateResources();
+        if (updateResources) {
+            await DualityRoll.addDualityResourceUpdates(config);
+            await config.resourceUpdates.updateResources();
+        }
 
         return { newRoll, parsedRoll };
     }

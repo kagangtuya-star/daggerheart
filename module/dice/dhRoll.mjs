@@ -122,10 +122,6 @@ export default class DHRoll extends Roll {
         if (roll._evaluated) {
             const message = await cls.create(msgData, { messageMode: config.selectedMessageMode });
 
-            if (config.tagTeamSelected) {
-                game.system.api.applications.dialogs.TagTeamDialog.assignRoll(message.speakerActor, message);
-            }
-
             if (roll.formula !== '' && game.modules.get('dice-so-nice')?.active) {
                 await game.dice3d.waitFor3DAnimationByMessageID(message.id);
             }
