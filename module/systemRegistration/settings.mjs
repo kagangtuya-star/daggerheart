@@ -39,12 +39,7 @@ export const registerKeyBindings = () => {
         name: game.i18n.localize('DAGGERHEART.SETTINGS.Keybindings.spotlight.name'),
         hint: game.i18n.localize('DAGGERHEART.SETTINGS.Keybindings.spotlight.hint'),
         uneditable: [],
-        editable: [
-            {
-                key: 's',
-                modifiers: []
-            }
-        ],
+        editable: [],
         onDown: game.system.api.macros.spotlightCombatant,
         onUp: () => {},
         restricted: true,
