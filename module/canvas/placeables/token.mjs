@@ -20,7 +20,7 @@ export default class DhTokenPlaceable extends foundry.canvas.placeables.Token {
             .get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.SpotlightTracker)
             .spotlightedTokens.has(this.document.uuid);
 
-        const turnIsSet = game.combat?.turn !== null;
+        const turnIsSet = typeof game.combat?.turn === 'number';
         const isTurn = game.combat?.combatant?.tokenId === this.id;
         const markerActive = markersEnabled && turnIsSet ? isTurn : spotlighted;
 
