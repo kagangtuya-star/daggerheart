@@ -36,7 +36,7 @@ export default class D20Roll extends DHRoll {
     get isCritical() {
         if (!this.d20._evaluated) return;
 
-        const criticalThreshold = this.options.actionType === 'reaction' ? 20 : this.data.system.criticalThreshold;
+        const criticalThreshold = this.options.actionType === 'reaction' ? 20 : this.data.criticalThreshold;
         return this.d20.total >= criticalThreshold;
     }
 
