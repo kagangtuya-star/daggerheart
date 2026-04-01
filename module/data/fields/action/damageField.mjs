@@ -56,7 +56,7 @@ export default class DamageField extends fields.SchemaField {
             ...config,
             roll: formulas,
             data: this.getRollData(),
-            isCritical: message?.system.roll.isCritical
+            isCritical: Boolean(message?.system.roll?.isCritical)
         };
         delete damageConfig.evaluate;
 

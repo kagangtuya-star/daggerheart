@@ -54,11 +54,14 @@ export default class DHActorRoll extends foundry.abstract.TypeDataModel {
     }
 
     get roll() {
-        if (this.parent.type === 'dualityRoll')
-            return this.parent.rolls.find(x => x instanceof game.system.api.dice.DualityRoll);
-
-        if (this.parent.type === 'fateRoll')
-            return this.parent.rolls.find(x => x instanceof game.system.api.dice.FateRoll);
+        switch (this.parent.type) {
+            case 'adversaryRoll':
+                return this.parent.rolls.find(x => x instanceof game.system.api.dice.D20Roll);
+            case 'dualityRoll':
+                return this.parent.rolls.find(x => x instanceof game.system.api.dice.DualityRoll);
+            case 'fateRoll':
+                return this.parent.rolls.find(x => x instanceof game.system.api.dice.FateRoll);
+        }
 
         return null;
     }
