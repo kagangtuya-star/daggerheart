@@ -706,7 +706,7 @@
                 "FIELDS": {
                     "initiator": {
                         "memberId": { "label": "Initiating Character" },
-                        "cost": { "label": "Initiation Cost" }
+                        "cost": { "label": "Hope Cost" }
                     }
                 },
                 "leaderTitle": "Initiating Character",

@@ -20,7 +20,7 @@ export default class TagTeamDialog extends HandlebarsApplicationMixin(Applicatio
                 owned: member.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)
             }));
 
-        this.initiator = null;
+        this.initiator = { cost: 3 };
         this.openForAllPlayers = true;
 
         this.tabGroups.application = Object.keys(party.system.tagTeam.members).length
