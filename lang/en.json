@@ -733,6 +733,17 @@
                     "selectRoll": "Select which roll value to be used for the Tag Team"
                 }
             },
+            "GroupRollSelect": {
+                "title": "Group Roll",
+                "leader": "Leader",
+                "leaderRoll": "Leader Roll",
+                "openDialogForAll": "Open Dialog For All",
+                "startGroupRoll": "Start Group Roll",
+                "cancelGroupRoll": "Cancel",
+                "finishGroupRoll": "Finish Group Roll",
+                "cancelConfirmTitle": "Cancel Group Roll",
+                "cancelConfirmText": "Are you sure you want to cancel the Group Roll? This will close it for all other players too."
+            },
             "TokenConfig": {
                 "actorSizeUsed": "Actor size is set, determining the dimensions"
             }
@@ -2982,18 +2993,6 @@
                     "immunityTo": "Immunity: {immunities}"
                 },
                 "featureTitle": "Class Feature",
-                "groupRoll": {
-                    "title": "Group Roll",
-                    "leader": "Leader",
-                    "partyTeam": "Party Team",
-                    "team": "Team",
-                    "selectLeader": "Select a Leader",
-                    "selectMember": "Select a Member",
-                    "rerollTitle": "Reroll Group Roll",
-                    "rerollContent": "Are you sure you want to reroll your {trait} roll?",
-                    "rerollTooltip": "Reroll",
-                    "wholePartySelected": "The whole party is selected"
-                },
                 "healingRoll": {
                     "title": "Heal - {damage}",
                     "heal": "Heal",
