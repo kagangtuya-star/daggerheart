@@ -736,13 +736,22 @@ export default class DhCharacter extends DhCreature {
             }
         }
 
+        /* Armor and ArmorEffects can set a Base Damage Threshold. Characters only gain level*2 bonus to severe if this is not present */
+        const severeThresholdMulitplier =
+            this.armor ||
+            this.parent.appliedEffects.some(x =>
+                x.system.changes.some(x => x.type === 'armor' && x.value.damageThresholds)
+            )
+                ? 1
+                : 2;
+
         this.damageThresholds = {
             major: this.armor
                 ? this.armor.system.baseThresholds.major + this.levelData.level.current
                 : this.levelData.level.current,
             severe: this.armor
                 ? this.armor.system.baseThresholds.severe + this.levelData.level.current
-                : this.levelData.level.current * 2
+                : this.levelData.level.current * severeThresholdMulitplier
         };
 
         const globalHopeMax = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Homebrew).maxHope;
