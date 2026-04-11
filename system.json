@@ -9,7 +9,7 @@
         "maximum": "14"
     },
     "url": "https://github.com/Foundryborne/daggerheart",
-    "manifest": "https://raw.githubusercontent.com/Foundryborne/daggerheart/V14/system.json",
+    "manifest": "https://raw.githubusercontent.com/Foundryborne/daggerheart/v14/system.json",
     "download": "https://github.com/Foundryborne/daggerheart/releases/download/2.1.1/system.zip",
     "authors": [
         {
