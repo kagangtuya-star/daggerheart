@@ -343,7 +343,7 @@ export async function runMigrations() {
         lastMigrationVersion = '2.0.0';
     }
 
-    if (foundry.utils.isNewerVersion('2.0.4', lastMigrationVersion)) {
+    if (foundry.utils.isNewerVersion('2.1.0', lastMigrationVersion)) {
         const downtimeMoves = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Homebrew);
         if (downtimeMoves.restMoves.longRest.moves.repairArmor) {
             await downtimeMoves.updateSource({
@@ -352,7 +352,7 @@ export async function runMigrations() {
             game.settings.set(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Homebrew, downtimeMoves.toObject());
         }
 
-        lastMigrationVersion = '2.0.4';
+        lastMigrationVersion = '2.1.0';
     }
     //#endregion
 
