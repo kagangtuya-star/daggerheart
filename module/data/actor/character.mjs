@@ -153,7 +153,6 @@ export default class DhCharacter extends DhCreature {
                         shortMoves: new fields.NumberField({
                             required: true,
                             integer: true,
-                            min: 0,
                             initial: 0,
                             label: 'DAGGERHEART.GENERAL.Bonuses.rest.shortRest.shortRestMoves.label',
                             hint: 'DAGGERHEART.GENERAL.Bonuses.rest.shortRest.shortRestMoves.hint'
@@ -161,7 +160,6 @@ export default class DhCharacter extends DhCreature {
                         longMoves: new fields.NumberField({
                             required: true,
                             integer: true,
-                            min: 0,
                             initial: 0,
                             label: 'DAGGERHEART.GENERAL.Bonuses.rest.shortRest.longRestMoves.label',
                             hint: 'DAGGERHEART.GENERAL.Bonuses.rest.shortRest.longRestMoves.hint'
@@ -171,7 +169,6 @@ export default class DhCharacter extends DhCreature {
                         shortMoves: new fields.NumberField({
                             required: true,
                             integer: true,
-                            min: 0,
                             initial: 0,
                             label: 'DAGGERHEART.GENERAL.Bonuses.rest.longRest.shortRestMoves.label',
                             hint: 'DAGGERHEART.GENERAL.Bonuses.rest.longRest.shortRestMoves.hint'
@@ -179,7 +176,6 @@ export default class DhCharacter extends DhCreature {
                         longMoves: new fields.NumberField({
                             required: true,
                             integer: true,
-                            min: 0,
                             initial: 0,
                             label: 'DAGGERHEART.GENERAL.Bonuses.rest.longRest.longRestMoves.label',
                             hint: 'DAGGERHEART.GENERAL.Bonuses.rest.longRest.longRestMoves.hint'
