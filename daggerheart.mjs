@@ -360,7 +360,7 @@ const updateActorsRangeDependentEffects = async token => {
         CONFIG.DH.SETTINGS.gameSettings.variantRules
     ).rangeMeasurement;
 
-    for (let effect of token.actor?.allApplicableEffects() ?? []) {
+    for (let effect of token.actor?.allApplicableEffects?.() ?? []) {
         if (!effect.system.rangeDependence?.enabled) continue;
         const { target, range, type } = effect.system.rangeDependence;
 
