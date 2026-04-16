@@ -117,7 +117,9 @@ export default class DhpActor extends Actor {
         }
     }
 
-    async _preDelete() {
+    async _preDelete(options, user) {
+        if ((await super._preDelete(options, user)) === false) return false;
+
         if (this.prototypeToken.actorLink) {
             game.system.registeredTriggers.unregisterItemTriggers(this.items);
         } else {
@@ -600,6 +602,7 @@ export default class DhpActor extends Actor {
         rollData.system = this.system.getRollData();
         rollData.prof = this.system.proficiency ?? 1;
         rollData.cast = this.system.spellcastModifier ?? 1;
+    
         return rollData;
     }
 
