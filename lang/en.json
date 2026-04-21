@@ -109,6 +109,11 @@
                     "customFormula": "Custom Formula",
                     "formula": "Formula"
                 },
+                "area": {
+                    "sectionTitle": "Areas",
+                    "shape": "Shape",
+                    "size": "Size"
+                },
                 "displayInChat": "Display in chat",
                 "deleteTriggerTitle": "Delete Trigger",
                 "deleteTriggerContent": "Are you sure you want to delete the {trigger} trigger?",
@@ -163,7 +168,8 @@
                 "rangeDependence": {
                     "title": "Range Dependence"
                 },
-                "stacking": { "title": "Stacking" }
+                "stacking": { "title": "Stacking" },
+                "targetDispositions": "Affected Dispositions"
             },
             "RangeDependance": {
                 "hint": "Settings for an optional distance at which this effect should activate",
@@ -2435,6 +2441,7 @@
             "maxWithThing": "Max {thing}",
             "missingDragDropThing": "Drop {thing} here",
             "multiclass": "Multiclass",
+            "name": "Name",
             "newCategory": "New Category",
             "newThing": "New {thing}",
             "next": "Next",
