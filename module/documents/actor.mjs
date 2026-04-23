@@ -109,12 +109,6 @@ export default class DhpActor extends Actor {
             });
         }
 
-        if (this.type === 'party') {
-            Object.assign(update, {
-                'ownership.default': CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
-            });
-        }
-
         this.updateSource(update);
     }
 
