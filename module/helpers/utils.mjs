@@ -372,10 +372,11 @@ export const itemAbleRollParse = (value, actor, item) => {
 
     const isItemTarget = value.toLowerCase().includes('item.@');
     const slicedValue = isItemTarget ? value.replaceAll(/item\.@/gi, '@') : value;
-    const model = isItemTarget ? item : actor;
+    const model = isItemTarget || item instanceof Item ? item : actor;
+    const rollData = isItemTarget || !model?.getRollData ? model : model.getRollData();
 
     try {
-        return Roll.replaceFormulaData(slicedValue, isItemTarget || !model?.getRollData ? model : model.getRollData());
+        return Roll.replaceFormulaData(slicedValue, rollData);
     } catch (_) {
         return '';
     }
@@ -808,4 +809,32 @@ export function sortBy(arr, fn) {
         return directCompare(resultA, resultB);
     };
     return arr.sort(cmp);
+}
+
+/**
+ * Creates a proxy that allows retrieval of top data but diverts updates to a different object.
+ * Generally used for roll data
+ */
+export function createShallowProxy(obj) {
+    if (obj._isShallowProxy) return obj;
+
+    const overrides = {};
+    return new Proxy(obj, {
+        get(target, prop, receiver) {
+            if (prop === '_isShallowProxy') return true;
+            if (prop in overrides) return overrides[prop];
+            return Reflect.get(target, prop, receiver);
+        },
+        set(_target, prop, newValue) {
+            overrides[prop] = newValue;
+            return true;
+        },
+        deleteProperty(_target, prop) {
+            delete overrides[prop];
+            return true;
+        },
+        has(target, key) {
+            return key in overrides || key in target;
+        }
+    });
 }
