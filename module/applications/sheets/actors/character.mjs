@@ -211,7 +211,7 @@ export default class CharacterSheet extends DHBaseActorSheet {
                 ...this.document.system.traits[key],
                 label: _loc(CONFIG.DH.ACTOR.abilities[key].label),
                 verbs: CONFIG.DH.ACTOR.abilities[key].verbs.map(x => game.i18n.localize(x)),
-                isSpellcasting: this.document.system.spellcastModifierTrait.key === key
+                isSpellcasting: this.document.system.spellcastModifierTrait?.key === key
             };
 
             return acc;
