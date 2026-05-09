@@ -132,14 +132,6 @@
 
     <div class="character-traits">
         {{#each this.attributes as |attribute key|}} 
-            {{!-- <div class="trait" data-tooltip="<b>{{attribute.label}}:</b><br>{{#each attribute.verbs}}{{this}}<br>{{/each}}" data-action="rollAttribute" data-attribute="{{key}}" data-value="{{attribute.value}}">
-
-                {{#if attribute.tierMarked}}
-                    <div class="tier-mark">
-                        <i class='fa-solid fa-circle' inert></i>
-                    </div>
-                {{/if}}
-            </div> --}}
             <div class="trait {{#if isSpellcasting}}with-spellcasting{{/if}}" data-tooltip="<b>{{attribute.label}}:</b><br>{{#each attribute.verbs}}{{this}}<br>{{/each}}" data-action="rollAttribute" data-attribute="{{key}}" data-value="{{attribute.value}}">
                 <div class="trait-name">
                     <div class="tier-mark {{#if attribute.tierMarked}}marked{{/if}}"></div>
