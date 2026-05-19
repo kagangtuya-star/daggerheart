@@ -4,7 +4,7 @@
     "description": "An unofficial implementation of the Daggerheart system",
     "version": "2.2.5",
     "compatibility": {
-        "minimum": "14.359",
+        "minimum": "14.361",
         "verified": "14.361",
         "maximum": "14"
     },
