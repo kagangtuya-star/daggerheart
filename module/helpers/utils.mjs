@@ -449,7 +449,6 @@ export async function createEmbeddedItemsWithEffects(actor, baseData) {
             effects: data.effects?.map(effect => effect.toObject())
         });
     }
-
     await actor.createEmbeddedDocuments('Item', effectData);
 }
 
