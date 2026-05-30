@@ -135,11 +135,11 @@ export default class DualityRoll extends D20Roll {
         this.terms = [this.terms[0], this.terms[1], this.terms[2]];
 
         this.terms[0] = new game.system.api.dice.diceTypes.HopeDie({
-            faces: this.data.rules.dualityRoll?.defaultHopeDice ?? 12
+            faces: this.terms[0]?.faces ?? this.data.rules.dualityRoll?.defaultHopeDice ?? 12
         });
         this.terms[1] = new foundry.dice.terms.OperatorTerm({ operator: '+' });
         this.terms[2] = new game.system.api.dice.diceTypes.FearDie({
-            faces: this.data.rules.dualityRoll?.defaultFearDice ?? 12
+            faces: this.terms[2]?.faces ?? this.data.rules.dualityRoll?.defaultFearDice ?? 12
         });
     }
 
