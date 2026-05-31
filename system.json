@@ -244,11 +244,14 @@
             "adversary": {
                 "htmlFields": ["notes", "description"]
             },
+            "npc": {
+                "htmlFields": ["notes"]
+            },
             "environment": {
                 "htmlFields": ["notes", "description"]
             },
             "party": {
-                "htmlFields": ["notes"]
+                "htmlFields": ["notes", "description"]
             }
         },
         "Item": {

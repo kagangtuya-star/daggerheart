@@ -23,6 +23,7 @@
             "companion": "Companion",
             "adversary": "Adversary",
             "environment": "Environment",
+            "npc": "NPC",
             "party": "Party"
         }
     },
@@ -332,6 +333,11 @@
                     }
                 },
                 "newAdversary": "New Adversary"
+            },
+            "NPC": {
+                "FIELDS": {
+                    "motives": { "label": "Motives" }
+                }
             },
             "Party": {
                 "Subtitle": {
