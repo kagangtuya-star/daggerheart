@@ -66,6 +66,14 @@ export default class CharacterSheet extends DHBaseActorSheet {
                 }
             },
             {
+                handler: DHBaseActorSheet.getBaseAttackContextOptions,
+                selector: '[data-item-uuid][data-type="attack"]',
+                options: {
+                    parentClassHooks: false,
+                    fixed: true
+                }
+            },
+            {
                 handler: CharacterSheet.#getDomainCardContextOptions,
                 selector: '[data-item-uuid][data-type="domainCard"]',
                 options: {
