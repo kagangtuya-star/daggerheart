@@ -64,7 +64,18 @@ export default class DhCharacter extends DhCreature {
                     core: new fields.BooleanField({ initial: false })
                 })
             ),
-            gold: new GoldField(),
+            gold: new GoldField({
+                initial: () => {
+                    const homebrew = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Homebrew);
+                    const { coins, handfuls, bags, chests } = homebrew.currency;
+                    return {
+                        coins: coins.enabled ? coins.initialAmount : 0,
+                        handfuls: handfuls.enabled ? handfuls.initialAmount : 0,
+                        bags: bags.enabled ? bags.initialAmount : 0,
+                        chests: chests.enabled ? chests.initialAmount : 0
+                    };
+                }
+            }),
             scars: new fields.NumberField({ initial: 0, integer: true, label: 'DAGGERHEART.GENERAL.scars' }),
             biography: new fields.SchemaField({
                 background: new fields.HTMLField(),
