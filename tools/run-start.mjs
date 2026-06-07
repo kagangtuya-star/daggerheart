@@ -7,7 +7,7 @@ import fs from 'fs';
 const { foundryPath, dataPath } = readEnvFile();
 
 // Run the original command with proper environment
-const args = ['rollup -c --watch', `node "\"${foundryPath}\"" --dataPath="${dataPath}" --noupnp`, 'gulp'];
+const args = ['rollup -c --watch', 'gulp', `node "\"${foundryPath}\"" --dataPath="${dataPath}" --noupnp`];
 
 spawn('npx', ['concurrently', ...args.map(arg => `"${arg}"`)], {
     stdio: 'inherit',
