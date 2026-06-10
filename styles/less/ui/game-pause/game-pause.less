@@ -1,0 +1,23 @@
+@import '../../utils/mixin.less';
+
+#pause.dh-style {
+    figcaption {
+        position: absolute;
+        margin-top: 24px;
+        animation: pause-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pause-pulse {
+        0% {
+            filter: drop-shadow(0 0 5px @secondary-blue);    
+        }
+
+        50% {
+            filter: drop-shadow(0 0 5px @golden);
+        }
+
+        100% {
+            filter: drop-shadow(0 0 5px @secondary-blue);   
+        }
+    }
+}
