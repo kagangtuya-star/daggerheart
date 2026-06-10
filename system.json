@@ -4,8 +4,8 @@
     "description": "An unofficial implementation of the Daggerheart system",
     "version": "2.3.2",
     "compatibility": {
-        "minimum": "14.361",
-        "verified": "14.363",
+        "minimum": "14.364",
+        "verified": "14.364",
         "maximum": "14"
     },
     "url": "https://github.com/Foundryborne/daggerheart",
