@@ -22,7 +22,6 @@
     pointer-events: all;
     align-self: flex-end;
     transition: 0.3s right ease-in-out;
-
     display: flex;
     flex-direction: column;
 
@@ -65,12 +64,35 @@
         padding: 0 0.5rem;
         overflow: hidden;
         font-size: var(--font-size-13);
+        
         .window-title {
             font-family: @font-body;
-            flex: 1;
         }
-        .header-control + .header-control {
-            margin-left: 8px;
+
+
+        .header-type-toggles {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            .header-type {
+                flex: 1;
+                border: 1px solid @beige;
+                border-radius: 12px;
+                padding: 2px 4px;
+                text-align: center;
+                background-color: @dark-blue;
+                color: @beige;
+
+                &.inactive {
+                    opacity: 0.4;
+                }
+
+                &.change-glow {
+                    animation: glow 1s ease-in-out infinite;
+                }
+            }
         }
     }
 
@@ -82,9 +104,27 @@
         overflow: auto;
         max-height: 312px;
 
+        .countdown-category-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            
+            &.hidden {
+                display: none;
+            }
+        }
+
         .countdown-container {
             display: flex;
             width: 100%;
+            border-radius: 6px;
+
+            &.change-glow {
+                animation: shimmer 1s ease-out;
+                background: linear-gradient(-45deg, transparent 30%, light-dark(@dark-blue-40, @golden-40) 35%, transparent 40%);
+                background-size: 300%;
+                background-position-x: 100%
+            }
 
             &.icon-only {
                 gap: 8px;
@@ -105,6 +145,7 @@
                 display: flex;
                 align-items: center;
                 gap: 16px;
+                border-radius: 6px;
 
                 img {
                     width: 2.75rem;
@@ -182,6 +223,25 @@
             //         content: '';
             //     }
             // }
+        }
+    }
+
+    @keyframes glow {
+        0% {
+            box-shadow: 0 0 1px 1px @golden;
+        }
+
+        100% {
+            box-shadow: 0 0 2px 2px @golden;
+        }
+    }
+
+    @keyframes shimmer {
+        from {
+            background-position-x: 98%;
+        }
+        to {
+            background-position-x: 0%
         }
     }
 }
