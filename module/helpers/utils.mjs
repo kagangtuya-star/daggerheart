@@ -885,3 +885,8 @@ export async function triggerChatRollFx(rolls, options = { whisper: false, blind
         foundry.audio.AudioHelper.play({ src: CONFIG.sounds.dice });
     }
 }
+
+export function shouldUseHopeFearAutomation(options = { gmAsPlayer: true }) {
+    const { hopeFear } = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Automation);
+    return (!game.user.isGM || options.gmAsPlayer) ? hopeFear.players : hopeFear.gm; 
+}

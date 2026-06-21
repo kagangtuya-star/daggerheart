@@ -1,4 +1,5 @@
 import { ResourceUpdateMap } from '../../data/action/baseAction.mjs';
+import { shouldUseHopeFearAutomation } from '../../helpers/utils.mjs';
 import { emitGMUpdate, GMUpdateEvent, RefreshType, socketEvent } from '../../systemRegistration/socket.mjs';
 import Party from '../sheets/actors/party.mjs';
 
@@ -480,19 +481,22 @@ export default class GroupRollDialog extends HandlebarsApplicationMixin(Applicat
 
         await cls.create(msgData);
 
-        const resourceMap = new ResourceUpdateMap(actor);
-        if (totalRoll.isCritical) {
-            resourceMap.addResources([
-                { key: 'stress', value: -1 },
-                { key: 'hope', value: 1 }
-            ]);
-        } else if (totalRoll.withHope) {
-            resourceMap.addResources([{ key: 'hope', value: 1 }]);
-        } else {
-            resourceMap.addResources([{ key: 'fear', value: 1 }]);
-        }
+        /* Handle resource updates for the finished GroupRoll */
+        if (shouldUseHopeFearAutomation({ gmAsPlayer: true })) {
+            const resourceMap = new ResourceUpdateMap(actor);
+            if (totalRoll.isCritical) {
+                resourceMap.addResources([
+                    { key: 'stress', value: -1 },
+                    { key: 'hope', value: 1 }
+                ]);
+            } else if (totalRoll.withHope) {
+                resourceMap.addResources([{ key: 'hope', value: 1 }]);
+            } else {
+                resourceMap.addResources([{ key: 'fear', value: 1 }]);
+            }
 
-        resourceMap.updateResources();
+            resourceMap.updateResources();
+        }
 
         /* Fin */
         this.cancelRoll({ confirm: false });
