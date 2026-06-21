@@ -4,6 +4,7 @@ import { getDocFromElement, getDocFromElementSync, tagifyElement } from '../../.
 const typeSettingsMap = {
     character: 'extendCharacterDescriptions',
     adversary: 'extendAdversaryDescriptions',
+    npc: 'extendAdversaryDescriptions',
     environment: 'extendEnvironmentDescriptions',
     ancestry: 'extendItemDescriptions',
     community: 'extendItemDescriptions',
@@ -262,7 +263,7 @@ export default function DHApplicationMixin(Base) {
 
             if (!!this.options.contextMenus.length) this._createContextMenus();
 
-            this.#autoExtendDescriptions(context);
+            this._autoExpandDescriptions(context);
         }
 
         /** @inheritDoc */
@@ -630,8 +631,9 @@ export default function DHApplicationMixin(Base) {
         /**
          * Extend inventory description when enabled in settings.
          * @returns {Promise<void>}
+         * @protected
          */
-        async #autoExtendDescriptions(context) {
+        async _autoExpandDescriptions(context) {
             const inventoryItems = this.element.querySelectorAll('.inventory-item[data-item-uuid]');
             for (const el of inventoryItems) {
                 // Get the doc uuid from the element
@@ -734,7 +736,7 @@ export default function DHApplicationMixin(Base) {
          * @type {ApplicationClickAction}
          */
         static async #onCreateDoc(event, target) {
-            const { documentClass, type, inVault, disabled } = target.dataset;
+            const { documentClass, type, inVault, disabled, featureForm } = target.dataset;
             const parentIsItem = this.document.documentName === 'Item';
             const featureOnCharacter = this.document.parent?.type === 'character' && type === 'feature';
             const parent = featureOnCharacter
@@ -752,6 +754,7 @@ export default function DHApplicationMixin(Base) {
                     identifier: this.document.system.isMulticlass ? 'multiclass' : null
                 };
             }
+            if (featureForm) systemData.featureForm = featureForm;
 
             const cls =
                 type === 'action' ? game.system.api.models.actions.actionsTypes.base : getDocumentClass(documentClass);
