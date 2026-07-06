@@ -167,9 +167,7 @@
         },
         "ACTIVEEFFECT": {
             "Config": {
-                "rangeDependence": {
-                    "title": "Range Dependence"
-                },
+                "rangeDependence": { "title": "Range Dependence" },
                 "stacking": { "title": "Stacking" },
                 "targetDispositions": "Affected Dispositions"
             },
