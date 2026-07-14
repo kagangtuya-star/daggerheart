@@ -2550,6 +2550,9 @@
                 },
                 "identifier": {
                     "label": "Identifier"
+                },
+                "gmNotes": {
+                    "label": "GM Notes"
                 }
             },
             "Ancestry": {
@@ -2564,6 +2567,9 @@
                     "major": "Major Threshold",
                     "severe": "Severe Threshold"
                 }
+            },
+            "Base": {
+                "addGMNote": "Add GM Note"
             },
             "Beastform": {
                 "FIELDS": {
