@@ -104,8 +104,10 @@
                     "startCountdown": "Start Countdown"
                 },
                 "damage": {
+                    "addResource": "Add Resource",
                     "multiplier": "Multiplier",
-                    "flatMultiplier": "Flat Multiplier"
+                    "flatMultiplier": "Flat Multiplier",
+                    "markResources": "Mark Resources"
                 },
                 "general": {
                     "customFormula": "Custom Formula",
@@ -2483,7 +2485,6 @@
             "reroll": "Reroll",
             "rerolled": "Rerolled",
             "rerollThing": "Reroll {thing}",
-            "resource": "Resource",
             "result": {
                 "single": "Result",
                 "plural": "Results"
