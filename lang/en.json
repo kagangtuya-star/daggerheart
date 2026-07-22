@@ -128,7 +128,12 @@
             },
             "Reload": {
                 "checkReload": "Check Reload",
-                "reloadRequired": "Reload Required!"
+                "reloadRequired": "Reload Required!",
+                "notRolled": "Not Rolled",
+                "checkFailed": "Check Failed",
+                "checkPassed": "Check Passed",
+                "rerollConfirmationTitle": "Reroll Reload Check",
+                "rerollConfirmationText": "Are you sure you want to reload the reload check?"
             },
             "RollField": {
                 "diceRolling": {
@@ -1328,7 +1333,7 @@
             },
             "ReloadChoices": {
                 "off": { "label": "Don't Use" },
-                "button": { "label": "Use button" },
+                "manual": { "label": "Manual" },
                 "auto": { "label": "Automatic" }
             },
             "RollTypes": {
@@ -2820,7 +2825,7 @@
                     },
                     "reload": {
                         "label": "Reload Checking",
-                        "hint": "If the system should present a button for checking if the character will need to reload or do it automatically"
+                        "hint": "If the system should automatically roll reload checks or wait for the manual press of a button in chat"
                     },
                     "resourceScrollTexts": {
                         "label": "Show Resource Change Scrolltexts",
