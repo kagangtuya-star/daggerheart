@@ -3289,6 +3289,7 @@
                 "lackingItemTransferPermission": "User {user} lacks owner permission needed to transfer items to {target}",
                 "noTokenTargeted": "No token is targeted",
                 "behaviorRegionRequiresGM": "Creating a Region with an attached Behavior requires an online GM",
+                "comboDiceOnlyTwoDiceError": "Combo dice functionality only works on a single pair of two dice",
                 "reloadRequired": "The {weapon} must be reloaded to be used!"
             },
             "Progress": {

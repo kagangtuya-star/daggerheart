@@ -1,5 +1,5 @@
-import BaseDie from './baseDie.mjs';
 import { updateResourcesForDualityReroll } from '../helpers.mjs';
+import BaseDie from './baseDie.mjs';
 
 export default class DualityDie extends BaseDie {
     constructor(options) {
