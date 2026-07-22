@@ -133,7 +133,7 @@
                 "checkFailed": "Check Failed",
                 "checkPassed": "Check Passed",
                 "rerollConfirmationTitle": "Reroll Reload Check",
-                "rerollConfirmationText": "Are you sure you want to reload the reload check?"
+                "rerollConfirmationText": "Are you sure you want to reroll the reload check?"
             },
             "RollField": {
                 "diceRolling": {
