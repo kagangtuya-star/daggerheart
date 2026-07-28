@@ -162,7 +162,7 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
             const allKeys = Object.keys(CONFIG.DH.GENERAL.healingTypes);
             context.allDamageTypesUsed = allKeys.every(k => k in this.action._source.damage.resources);
             if (this.action.damage?.main?.hasOwnProperty('includeBase') && this.action.type === 'attack')
-                context.hasBaseDamage = !!this.action.parent.attack;
+                context.hasBaseDamage = !!this.action.parent.attack && !this.action.baseAction;
         }
 
         context.costOptions = this.getCostOptions();

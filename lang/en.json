@@ -155,6 +155,10 @@
                 "resultBased": {
                     "label": "Formula based on Hope/Fear result."
                 },
+                "fullRestore": {
+                    "label": "Fully restore the resource.",
+                    "inChatRoll": "Full"
+                },
                 "applyTo": {
                     "label": "Targeted Resource"
                 },
@@ -1288,6 +1292,11 @@
                     "name": "Fear",
                     "abbreviation": "FR",
                     "inChatRoll": "Fear"
+                },
+                "weaponResource": {
+                    "name": "Weapon Resource",
+                    "abbreviation": "WR",
+                    "inChatRoll": "Reload"
                 }
             },
             "ItemResourceProgression": {
@@ -2677,6 +2686,7 @@
             },
             "Weapon": {
                 "weaponType": "Weapon Type",
+                "configureAttack": "Configure Attack",
                 "primaryWeapon": {
                     "full": "Primary Weapon",
                     "short": "Primary"
@@ -3129,6 +3139,8 @@
                     "applyHealing": "Apply Healing"
                 },
                 "markResource": "Mark {quantity} {resource}",
+                "reloadWeapon": "Reload {weapon}",
+                "restoreWeaponResource": "Restore {quantity} on {weapon}",
                 "refreshMessage": {
                     "title": "Feature Refresh",
                     "header": "Refreshed"
