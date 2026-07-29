@@ -2493,7 +2493,7 @@
             "newThing": "New {thing}",
             "next": "Next",
             "none": "None",
-            "noTarget": "No current target",
+            "noTarget": "No Current Targets",
             "optionalThing": "Optional {thing}",
             "partner": "Partner",
             "player": {
@@ -3103,7 +3103,7 @@
                     "hitTarget": "Hit",
                     "targetingInitial": "Targets",
                     "targetingSelected": "Selected",
-                    "totalTargetedTokens": "{total} selected",
+                    "totalTargetedTokens": "{total} Selected",
                     "noTokensSelected": "No Tokens Selected",
                     "setSelectedAsTargets": "Set Selected As Targets"
                 },
