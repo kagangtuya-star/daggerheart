@@ -137,6 +137,17 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
         });
     }
 
+    /** @inheritDoc */
+    _onFirstRender(context, options) {
+        super._onFirstRender(context, options);
+        this.item.apps[this.id] = this;
+    }
+
+    /** @override */
+    _onClose(_options) {
+        delete this.item.apps[this.id];
+    }
+
     async _prepareContext(_options) {
         const context = await super._prepareContext(_options, 'action');
         context.source = this.action.toObject(true);
