@@ -175,8 +175,11 @@ export default class DHBaseItemSheet extends DHApplicationMixin(ItemSheetV2) {
         let systemData = {};
         if (this.document.parent?.type === 'character') {
             systemData = {
-                originItemType: this.document.type,
-                identifier: multiclass ?? type
+                granter: {
+                    id: this.document.id,
+                    type: this.document.type,
+                    identifier: multiclass ?? type
+                }
             };
         }
 
@@ -316,8 +319,11 @@ export default class DHBaseItemSheet extends DHApplicationMixin(ItemSheetV2) {
                         _stats: { compendiumSource: this.document.uuid },
                         system: {
                             ...itemData.system,
-                            originItemType: this.document.type,
-                            identifier: multiclass ?? target.dataset.type
+                            granter: {
+                                id: this.document.id,
+                                type: this.document.type,
+                                identifier: multiclass ?? target.dataset.type
+                            }
                         }
                     },
                     { parent: this.document.parent }

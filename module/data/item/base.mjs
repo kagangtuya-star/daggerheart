@@ -109,7 +109,7 @@ export default class BaseDataItem extends foundry.abstract.TypeDataModel {
 
     /**
      * Convenient access to the item's actor, if it exists.
-     * @returns {foundry.documents.Actor | null}
+     * @returns {DhpActor | null}
      */
     get actor() {
         return this.parent.actor;
@@ -212,29 +212,7 @@ export default class BaseDataItem extends foundry.abstract.TypeDataModel {
             this.updateSource({ actions: [action] });
         }
 
-        if (this.actor && this.actor.type === 'character' && this.features) {
-            const features = [];
-            for (let f of this.features) {
-                const fBase = f.item ?? f;
-                const feature = fBase.pack ? await foundry.utils.fromUuid(fBase.uuid) : fBase;
-                features.push(
-                    foundry.utils.mergeObject(
-                        feature.toObject(),
-                        {
-                            _stats: { compendiumSource: fBase.uuid },
-                            system: {
-                                originItemType: this.parent.type,
-                                identifier: f.item ? f.type : null,
-                                multiclassOrigin: this.isMulticlass
-                            }
-                        },
-                        { inplace: false }
-                    )
-                );
-            }
-
-            await this.actor.createEmbeddedDocuments('Item', features);
-        }
+        return super._preCreate(data, options, user);
     }
 
     async _preUpdate(changed, options, userId) {

@@ -465,19 +465,19 @@ export default class DhCharacter extends DhCreature {
          * Preventing subclass features from being available if the chacaracter does not
          * have the right subclass advancement
          */
-        if (item.system.originItemType !== CONFIG.DH.ITEM.featureTypes.subclass.id) {
+        if (item.system.granter?.type !== CONFIG.DH.ITEM.featureTypes.subclass.id) {
             return true;
         }
         if (!this.class.subclass) return false;
 
-        const prop = item.system.multiclassOrigin ? 'multiclass' : 'class';
+        const prop = item.system.granter?.multiclass ? 'multiclass' : 'class';
         const subclassState = this[prop].subclass?.system?.featureState;
         if (!subclassState) return false;
 
         if (
-            item.system.identifier === CONFIG.DH.ITEM.featureSubTypes.foundation ||
-            (item.system.identifier === CONFIG.DH.ITEM.featureSubTypes.specialization && subclassState >= 2) ||
-            (item.system.identifier === CONFIG.DH.ITEM.featureSubTypes.mastery && subclassState >= 3)
+            item.system.granter?.identifier === CONFIG.DH.ITEM.featureSubTypes.foundation ||
+            (item.system.granter?.identifier === CONFIG.DH.ITEM.featureSubTypes.specialization && subclassState >= 2) ||
+            (item.system.granter?.identifier === CONFIG.DH.ITEM.featureSubTypes.mastery && subclassState >= 3)
         ) {
             return true;
         } else {
@@ -591,15 +591,16 @@ export default class DhCharacter extends DhCreature {
             features = [];
 
         for (let item of this.parent.items.filter(x => this.isItemAvailable(x))) {
-            if (item.system.originItemType === CONFIG.DH.ITEM.featureTypes.ancestry.id) {
+            const originItemType = item.system.granter?.type;
+            if (originItemType === CONFIG.DH.ITEM.featureTypes.ancestry.id) {
                 ancestryFeatures.push(item);
-            } else if (item.system.originItemType === CONFIG.DH.ITEM.featureTypes.community.id) {
+            } else if (originItemType === CONFIG.DH.ITEM.featureTypes.community.id) {
                 communityFeatures.push(item);
-            } else if (item.system.originItemType === CONFIG.DH.ITEM.featureTypes.class.id) {
-                (item.system.multiclassOrigin ? multiclassFeatures : classFeatures).push(item);
-            } else if (item.system.originItemType === CONFIG.DH.ITEM.featureTypes.subclass.id) {
-                (item.system.multiclassOrigin ? multiclassSubclassFeatures : subclassFeatures).push(item);
-            } else if (item.system.originItemType === CONFIG.DH.ITEM.featureTypes.companion.id) {
+            } else if (originItemType === CONFIG.DH.ITEM.featureTypes.class.id) {
+                (item.system.granter?.multiclass ? multiclassFeatures : classFeatures).push(item);
+            } else if (originItemType === CONFIG.DH.ITEM.featureTypes.subclass.id) {
+                (item.system.granter?.multiclass ? multiclassSubclassFeatures : subclassFeatures).push(item);
+            } else if (originItemType === CONFIG.DH.ITEM.featureTypes.companion.id) {
                 companionFeatures.push(item);
             } else if (item.type === 'feature' && !item.system.type) {
                 features.push(item);

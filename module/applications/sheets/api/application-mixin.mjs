@@ -751,8 +751,11 @@ export default function DHApplicationMixin(Base) {
             let systemData = {};
             if (featureOnCharacter) {
                 systemData = {
-                    originItemType: this.document.type,
-                    identifier: this.document.system.isMulticlass ? 'multiclass' : null
+                    granter: {
+                        id: this.document.id,
+                        type: this.document.type,
+                        identifier: this.document.system.isMulticlass ? 'multiclass' : null
+                    }
                 };
             }
             if (featureForm) systemData.featureForm = featureForm;
