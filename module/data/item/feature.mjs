@@ -52,4 +52,9 @@ export default class DHFeature extends BaseDataItem {
         }
         return super._preCreate(data, options, user);
     }
+
+    prepareDerivedData() {
+        super.prepareDerivedData();
+        this.granterItem = this.actor?.items.get(this.granter?.id);
+    }
 }
