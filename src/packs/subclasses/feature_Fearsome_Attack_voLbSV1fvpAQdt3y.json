@@ -6,15 +6,15 @@
   "img": "icons/magic/unholy/hand-weapon-glow-black-green.webp",
   "system": {
     "attribution": {
-      "source": "Daggerheart H&F"
+      "source": "Daggerheart SRD",
+      "page": null
     },
     "description": "<p><strong>Spend a Favor</strong> to reroll any number of your damage dice. You can continue spending Favor to use this feature on the same damage roll.</p>",
     "gmNotes": "",
     "resource": null,
     "actions": {},
-    "originItemType": null,
-    "multiclassOrigin": false,
-    "featureForm": "passive"
+    "featureForm": "passive",
+    "granter": null
   },
   "effects": [],
   "sort": 0,

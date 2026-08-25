@@ -6,15 +6,15 @@
   "img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
   "system": {
     "attribution": {
-      "source": "Daggerheart H&F"
+      "source": "Daggerheart SRD",
+      "page": null
     },
     "description": "<p>You gain a +2 bonus to your Evasion against attacks made by a creature you've <em>Marked for Death</em>.</p>",
     "gmNotes": "",
     "resource": null,
     "actions": {},
-    "originItemType": null,
-    "multiclassOrigin": false,
-    "featureForm": "passive"
+    "featureForm": "passive",
+    "granter": null
   },
   "effects": [
     {
