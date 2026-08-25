@@ -102,6 +102,14 @@ export default class DHItem extends foundry.documents.Item {
         }
     }
 
+    static async deleteDocuments(ids = [], operation = {}) {
+        const allIds = operation.parent ? ids.flatMap(id => (
+            [id, ...operation.parent.items.get(id).system.getLinkedItems().map(x => x.id)]
+        )) : ids;
+
+        return super.deleteDocuments(allIds, operation);
+    }
+
     /* -------------------------------------------- */
 
     /**

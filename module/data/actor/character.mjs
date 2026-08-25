@@ -428,9 +428,11 @@ export default class DhCharacter extends DhCreature {
     get loadoutSlot() {
         const loadoutCount = this.domainCards.loadout?.length ?? 0;
         const worldSetting = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Homebrew).maxLoadout;
+        const limit = worldSetting + this.bonuses.maxLoadout;
+
         return {
             current: loadoutCount,
-            available: loadoutCount < worldSetting
+            available: loadoutCount < limit
         };
     }
 
@@ -581,7 +583,8 @@ export default class DhCharacter extends DhCreature {
     }
 
     get sheetLists() {
-        const ancestryFeatures = [],
+        const transformations = {},
+            ancestryFeatures = [],
             communityFeatures = [],
             classFeatures = [],
             subclassFeatures = [],
@@ -592,7 +595,19 @@ export default class DhCharacter extends DhCreature {
 
         for (let item of this.parent.items.filter(x => this.isItemAvailable(x))) {
             const originItemType = item.system.granter?.type;
-            if (originItemType === CONFIG.DH.ITEM.featureTypes.ancestry.id) {
+
+            if (item.type === 'transformation') {
+                const features = this.parent.items.filter(x => x.type === 'feature' && x.system.granter?.id === item.id);
+                transformations[`transformation-${item.id}`] = {
+                    title: `${_loc('TYPES.Item.transformation')} - ${item.name}`,
+                    type: 'transformation',
+                    deleteUuid: item.uuid,
+                    values: features
+                };   
+            }
+            if (originItemType === CONFIG.DH.ITEM.featureTypes.transformation.id) {
+                continue; 
+            } else if (originItemType === CONFIG.DH.ITEM.featureTypes.ancestry.id) {
                 ancestryFeatures.push(item);
             } else if (originItemType === CONFIG.DH.ITEM.featureTypes.community.id) {
                 communityFeatures.push(item);
@@ -608,6 +623,7 @@ export default class DhCharacter extends DhCreature {
         }
 
         return {
+            ...transformations,
             ancestryFeatures: {
                 title: `${game.i18n.localize('TYPES.Item.ancestry')} - ${this.ancestry?.name}`,
                 type: 'ancestry',

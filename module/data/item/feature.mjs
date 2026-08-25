@@ -42,7 +42,18 @@ export default class DHFeature extends BaseDataItem {
             })
         };
     }
+    
+    prepareBaseData() {
+        super.prepareBaseData();
+        this.inactive = false; // May be set by other features
+    }
 
+    prepareDerivedData() {
+        super.prepareDerivedData();
+        this.granterItem = this.actor?.items.get(this.granter?.id);
+    }
+
+    /** @inheritdoc */
     _preCreate(data, options, user) {
         // Ensure granter is purged if this is being created as a world item
         // Otherwise, check if valid. If keepId is on, it may be a batch creation, so we presume its with intent
@@ -53,8 +64,14 @@ export default class DHFeature extends BaseDataItem {
         return super._preCreate(data, options, user);
     }
 
-    prepareDerivedData() {
-        super.prepareDerivedData();
-        this.granterItem = this.actor?.items.get(this.granter?.id);
+    /** @inheritdoc */
+    async _preUpdate(changes, options, user) {
+        const allowed = await super._preUpdate(changes, options, user);
+        if (allowed === false) return false;
+
+        const actionChanges = changes.system?.actions ?? {};
+        if (Object.values(actionChanges).some(x => x.type === 'evolution')) {
+            changes.system.featureForm = 'evolution';
+        }
     }
 }
