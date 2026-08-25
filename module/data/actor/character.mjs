@@ -312,6 +312,12 @@ export default class DhCharacter extends DhCreature {
                         choices: CONFIG.DH.GENERAL.dieFaces,
                         initial: null,
                         label: 'DAGGERHEART.ACTORS.Character.defaultDisadvantageDice'
+                    }),
+                    comboDieIndex: new fields.NumberField({
+                        integer: true,
+                        min: 0,
+                        max: 5,
+                        initial: 0
                     })
                 })
             }, { persisted: false }),
@@ -453,6 +459,24 @@ export default class DhCharacter extends DhCreature {
      */
     get usesUnarmed() {
         return !(this.primaryWeapon?.system?.equipped || this.secondaryWeapon?.system?.equipped);
+    }
+
+    get levelupTiers() {
+        const tierData = game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.LevelTiers);
+        const setTierData = levelupOptionTiers => {
+            for (const tierKey of Object.keys(levelupOptionTiers ?? {})) {
+                const tier = levelupOptionTiers[tierKey];
+                for (const optionKey of Object.keys(tier)) {
+                    const option = tier[optionKey];
+                    tierData.tiers[tierKey].options[optionKey] = option;
+                }
+            }
+        }
+
+        setTierData(this.class?.value?.system.levelupOptionTiers);
+        setTierData(this.multiclass?.value?.system.levelupOptionTiers);
+
+        return tierData;
     }
 
     /* All items are valid on characters */
@@ -782,6 +806,9 @@ export default class DhCharacter extends DhCreature {
                                 }
                             });
                             break;
+                        case 'dice':
+                            this.rules.roll[selection.subType] += 1;
+                            break;
                     }
                 }
             }
@@ -837,6 +864,14 @@ export default class DhCharacter extends DhCreature {
             label: 'DAGGERHEART.GENERAL.armor',
             isReversed: true
         };
+
+        /* Add convience <dice>Faces properties for all diceIndexes */
+        const { comboDieIndex } = this.rules.roll;
+        const dice = { comboDieIndex };
+        for (const dieKey of Object.keys(dice)) {
+            const diceBaseKey = dieKey.replace('Index', '');
+            this.rules.roll[`${diceBaseKey}Faces`] = CONFIG.DH.GENERAL.dieFaces[dice[dieKey]];
+        }
 
         // Clamp resources (must be done last to ensure all updates occur)
         this.resources.clamp();
