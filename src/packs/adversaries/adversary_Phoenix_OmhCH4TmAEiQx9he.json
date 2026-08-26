@@ -263,8 +263,7 @@
                   "ring": "#cd580a",
                   "background": null,
                   "effects": [
-                    "RING_PULSE",
-                    "BKG_WAVE"
+                    "RING_PULSE"
                   ]
                 }
               }
@@ -316,7 +315,6 @@
             "stacking": null,
             "targetDispositions": []
           },
-          "origin": "Compendium.daggerheart.adversaries.Actor.OmhCH4TmAEiQx9he.Item.L1KzwZQAUDJzEFv0",
           "_id": "xJGxzVJTPEDpzAVG",
           "type": "base",
           "start": {
