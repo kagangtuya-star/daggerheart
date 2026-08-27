@@ -4107,7 +4107,8 @@
                     "weapons": "Weapons",
                     "armors": "Armors",
                     "consumables": "Consumables",
-                    "loots": "Loot"
+                    "loots": "Loot",
+                    "transformations": "Transformations"
                 }
             },
             "Notifications": {
