@@ -129,7 +129,7 @@ export default class DHActorRoll extends foundry.abstract.TypeDataModel {
      * @returns {boolean}
      */
     get appliesEffects() {
-        return this.hasEffect && !this.action.evolution;
+        return this.hasEffect && !this.action?.evolution;
     }
 
     /**
