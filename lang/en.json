@@ -102,6 +102,13 @@
                     "actorError": "Actor missing for token. Can't restore to unevolved state.",
                     "deevolveConfirmationTitle": "Remove Evolution",
                     "deevolveConfirmationText": "Are you sure you want to remove the evolution?"
+                },
+                "grouped": {
+                    "name": "Group",
+                    "tooltip": "Groups many actions under one button. Individual actions either selected or randomized.",
+                    "selectionType": { "label": "Action Selection Type" }, 
+                    "groupedActions": { "label": "Grouped Actions" },
+                    "missingGroupedActions": "This action has no grouped actions attached to it"
                 }
             },
             "Config": {
@@ -927,6 +934,9 @@
                 "actorSizeUsed": "Actor size is set, determining the dimensions",
                 "tokenSize": "Token Size",
                 "sizeCategory": "Size Category"
+            },
+            "MultiActionSelect": {
+                "instructionText": "Select Which Action to Use"
             }
         },
         "CLASS": {
@@ -1798,6 +1808,10 @@
             "SelectAction": {
                 "selectType": "Select Action Type",
                 "selectAction": "Action Selection"
+            },
+            "GroupActionSelectionType": {
+                "selected": "Selected",
+                "randomized": "Randomized"
             },
             "TagTeamRollTypes": {
                 "trait": "Trait",
