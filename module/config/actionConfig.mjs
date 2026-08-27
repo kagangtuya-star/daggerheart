@@ -35,6 +35,12 @@ export const actionTypes = {
         icon: 'fa-person-rays',
         tooltip: 'DAGGERHEART.ACTIONS.TYPES.effect.tooltip'
     },
+    grouped: {
+        id: 'grouped',
+        name: 'DAGGERHEART.ACTIONS.TYPES.grouped.name',
+        icon: action => action?.grouped?.selectionType === groupActionSelectionType.randomized.id ? 'fa-dice' : 'fa-table-list',
+        tooltip: 'DAGGERHEART.ACTIONS.TYPES.grouped.tooltip'
+    },
     healing: {
         id: 'healing',
         name: 'DAGGERHEART.ACTIONS.TYPES.healing.name',
@@ -180,3 +186,14 @@ export const dynamicEffects = {
         value: 0x20
     }
 }
+
+export const groupActionSelectionType = {
+    selected: {
+        id: 'selected',
+        label: 'DAGGERHEART.CONFIG.GroupActionSelectionType.selected'
+    },
+    randomized: {
+        id: 'randomized',
+        label: 'DAGGERHEART.CONFIG.GroupActionSelectionType.randomized'
+    }
+};
