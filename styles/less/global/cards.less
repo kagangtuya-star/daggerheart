@@ -218,6 +218,15 @@
     }
 }
 
+/** Older Firefox cannot handle division or multiplication of values with units. We force a static size when this happens */
+body.dh-old-firefox-cards {
+    .dh-card,
+    .dh-card * {
+        --card-width: 292px;
+        --scale: 1;
+    }
+}
+
 .dh-card.domainCard {
     --initial-portrait-ratio: 0.665;
     --trim-height: calc(22px * var(--scale));
