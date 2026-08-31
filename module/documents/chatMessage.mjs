@@ -138,6 +138,10 @@ export default class DhpChatMessage extends foundry.documents.ChatMessage {
             element.addEventListener('click', this.onApplyEffect.bind(this))
         );
 
+        html.querySelectorAll('.undo-damage-button').forEach(element =>
+            element.addEventListener('click', this.onUndoDamage.bind(this))
+        );
+
         for (const element of html.querySelectorAll('.action-areas')) {
             element.addEventListener('click', this.onCreateAreas.bind(this));
         }
@@ -223,6 +227,32 @@ export default class DhpChatMessage extends foundry.documents.ChatMessage {
                 if (this.system.hasHealing) actor.takeHealing(this.system.damage);
                 else actor.takeDamage(this.system.damage);
             }
+        }
+    }
+
+    async onUndoDamage(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const { token: tokenId } = event.target.closest('[data-token]').dataset;
+        const actor = canvas.scene.tokens.get(tokenId)?.actor;
+        const resourcesUpdates = this.getFlag(CONFIG.DH.id, 'resourcesUpdates') ?? [];
+        const [index, actorDatas] = [...resourcesUpdates.entries()]?.find(([index, r]) => r.token?.id === tokenId)
+            ?? [];
+        const actorUpdates = actorDatas?.updates;
+        if (!actor || !actorUpdates) return;
+
+        const revertedUpdates = actorUpdates.map(u => ({...u, value: u.value * -1}));
+        const updated = await actor.modifyResource(revertedUpdates);
+        if (updated) {
+            resourcesUpdates[index].token.reverted = true;
+            await this.setFlag(CONFIG.DH.id, 'resourcesUpdates', resourcesUpdates);
+
+            const element = document.createElement('div');
+            element.innerHTML = this.content;
+            element.querySelector(`[data-token="${tokenId}"]`).classList.add('damage-reverted');
+            await this.update({ content: element.innerHTML });
+
+            this.renderHTML();
         }
     }
 

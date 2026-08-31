@@ -161,6 +161,7 @@ export default class DamageField extends fields.SchemaField {
                 type: 'systemMessage',
                 user: game.user.id,
                 speaker: cls.getSpeaker({ actor: speakerActor }),
+                flags: { [CONFIG.DH.id]: { resourcesUpdates: targetDamage } },
                 title: game.i18n.localize(
                     `DAGGERHEART.UI.Chat.damageSummary.${config.hasHealing ? 'healingTitle' : 'title'}`
                 ),
@@ -168,7 +169,9 @@ export default class DamageField extends fields.SchemaField {
                     'systems/daggerheart/templates/ui/chat/damageSummary.hbs',
                     {
                         targets: targetDamage,
-                        hideObserverPermissionInChat
+                        hideObserverPermissionInChat,
+                        isGM: game.user.isGM,
+                        type: config.hasHealing ? 'healing' : 'damage'
                     }
                 )
             };
