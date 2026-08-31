@@ -66,6 +66,12 @@ export default class DHBaseActorSheet extends DHApplicationMixin(ActorSheetV2) {
     /** @inheritdoc */
     _getHeaderControls() {
         const controls = super._getHeaderControls();
+        controls.push({
+            icon: 'fa-solid fa-image',
+            label: 'SIDEBAR.CharArt',
+            action: 'showPortraitArtwork'
+        });
+
         if (this.actor.refreshSourceUuid) {
             controls.push({
                 label: _loc('DAGGERHEART.ITEMS.Base.Refresh.Title'),
@@ -156,6 +162,9 @@ export default class DHBaseActorSheet extends DHApplicationMixin(ActorSheetV2) {
     /**@inheritdoc */
     _attachPartListeners(partId, htmlElement, options) {
         super._attachPartListeners(partId, htmlElement, options);
+
+        htmlElement.querySelector('.portrait > img, img.profile')
+            ?.addEventListener('contextmenu', DHBaseActorSheet.#onDisplayPortraitArtwork.bind(this));
 
         htmlElement.querySelectorAll('.inventory-item-quantity').forEach(element => {
             element.addEventListener('change', this.updateItemQuantity.bind(this));
@@ -248,6 +257,12 @@ export default class DHBaseActorSheet extends DHApplicationMixin(ActorSheetV2) {
     /* -------------------------------------------- */
     /*  Application Listener Actions                */
     /* -------------------------------------------- */
+
+    static #onDisplayPortraitArtwork() {
+        const { ImagePopout } = foundry.applications.apps;
+        const {img, name, uuid} = this.document;
+        new ImagePopout({src: img, uuid, window: {title: name}}).render({force: true});
+    }
 
     async updateItemQuantity(event) {
         const item = await getDocFromElement(event.currentTarget);
