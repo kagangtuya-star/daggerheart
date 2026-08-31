@@ -225,9 +225,64 @@ export default class DhpActor extends Actor {
 
     _onUpdateDescendantDocuments(parent, collection, documents, changes, options, userId) {
         super._onUpdateDescendantDocuments(parent, collection, documents, changes, options, userId);
+        
         for (const party of this.parties) {
             party.renderDebounced({ parts: ['partyMembers'] });
         }
+
+        if (collection === 'items') {
+            if (game.user.id === userId) {
+                this._cleanupOptionalResources();
+            }
+        }
+    }
+
+    _onDeleteDescendantDocuments(parent, collection, documents, ids, options, userId) {
+        super._onDeleteDescendantDocuments(parent, collection, documents, ids, options, userId);
+        if (collection === 'items') {
+            if (game.user.id === userId) {
+                this._cleanupOptionalResources();
+            }
+        }
+    }
+
+    /**
+     * Cleanup of any optional resources on the actor that are no longer available.
+     * @param {string[]} featureIds 
+     * @param {string[]} possibleRemovedResources 
+     * @returns {Promise<unknown> | void}
+     * @protected
+     */
+    _cleanupOptionalResources() {
+        if (!(this.type in CONFIG.DH.RESOURCE)) return;
+
+        // Get features and homebrew resources that are valid
+        // Because we have to filter out possibly removed ones, 
+        const features = this.itemTypes.feature;
+        const featureProvidedResources = features.flatMap(f => Array.from(f.system.actorResources));
+        const homebrewResources = 
+            game.settings.get(CONFIG.DH.id, CONFIG.DH.SETTINGS.gameSettings.Homebrew).toObject();
+        const applicableHomebrewResources = homebrewResources.resources[this.type]?.resources ?? {};
+
+        const resourceKeys = Object.keys(this.system._source.resources); 
+        const keysToDelete = resourceKeys.filter(key => 
+            !((key in CONFIG.DH.RESOURCE[this.type].base) 
+                || featureProvidedResources.includes(key)
+                || (key in applicableHomebrewResources))
+        );
+
+        if (keysToDelete.length) {
+            return this.update({ 
+                'system.resources': keysToDelete.reduce((r, k) => {
+                    r[k] = _del;
+                    return r;
+                }, {})
+            });
+        }
+    }
+
+    _preUpdate(changed, options, user) {
+        return super._preUpdate(changed, options, user);
     }
 
     _onUpdate(changes, options, userId) {

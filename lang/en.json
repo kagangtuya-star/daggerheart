@@ -1792,6 +1792,12 @@
                     "label": "Automatic"
                 }
             },
+            "Resources": {
+                "optionalResources": {
+                    "favor": "Favor",
+                    "focus": "Focus"
+                }
+            },
             "RollTypes": {
                 "trait": {
                     "name": "Trait"
@@ -3272,6 +3278,7 @@
             "next": "Next",
             "none": "None",
             "noTarget": "No Current Targets",
+            "opacity": "Opacity",
             "optionalThing": "Optional {thing}",
             "partner": "Partner",
             "player": {
@@ -3536,7 +3543,8 @@
             "Feature": {
                 "activeWhenEvolved": "Active When Evolved",
                 "evolutionFeature": "Evolution Feature",
-                "evolutionLocked": "Features with an evolution action must be of evolution type"
+                "evolutionLocked": "Features with an evolution action must be of evolution type",
+                "actorResources": "Actor Resources"
             },
             "Subclass": {
                 "spellcastingTrait": "Spellcasting Trait",
@@ -3828,10 +3836,10 @@
                                 "label": "Icon"
                             },
                             "isIcon": {
-                                "label": "Font Awesome Icon"
+                                "label": "FA Icon"
                             },
                             "noColorFilter": {
-                                "label": "Disable Color Filter"
+                                "label": "No Filter"
                             }
                         }
                     },
