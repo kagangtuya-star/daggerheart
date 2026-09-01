@@ -1731,10 +1731,10 @@
                     "abbreviation": "FR",
                     "inChatRoll": "Fear"
                 },
-                "weaponResource": {
-                    "name": "Weapon Resource",
-                    "abbreviation": "WR",
-                    "inChatRoll": "Reload"
+                "resource": {
+                    "name": "Item Resource",
+                    "abbreviation": "IR",
+                    "inChatRoll": "Item Resource"
                 }
             },
             "ItemResourceProgression": {

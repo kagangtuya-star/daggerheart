@@ -115,8 +115,6 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
         }
     };
 
-    static CLEAN_ARRAYS = ['cost', 'effects', 'summon'];
-
     _getTabs(tabs) {
         for (const v of Object.values(tabs)) {
             v.active = this.tabGroups[v.group] ? this.tabGroups[v.group] === v.id : v.active;
@@ -302,16 +300,23 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
         const submitData = foundry.utils.expandObject(formData.object);
 
         const itemAbilityCostKeys = Object.keys(CONFIG.DH.GENERAL.itemAbilityCosts);
-        for (const keyPath of this.constructor.CLEAN_ARRAYS) {
+        for (const keyPath of ['cost', 'effects', 'summon', 'damage.resources']) {
             const data = foundry.utils.getProperty(submitData, keyPath);
-            const dataValues = data ? Object.values(data) : [];
             if (keyPath === 'cost') {
+                const dataValues = data ? Object.values(data) : [];
                 for (var value of dataValues) {
                     value.itemId = itemAbilityCostKeys.includes(value.key) ? this.action.parent.parent.id : null;
                 }
-            }
 
-            if (data) foundry.utils.setProperty(submitData, keyPath, dataValues);
+                if (dataValues.length) foundry.utils.setProperty(submitData, keyPath, dataValues);
+            }
+            if (keyPath === 'damage.resources') {
+                const dataValues = data ? Object.entries(data) : [];
+                for (var [key, resource] of dataValues) {
+                    resource.itemId = itemAbilityCostKeys.includes(key) ? this.action.parent.parent.id : null;
+                    foundry.utils.setProperty(submitData, `${keyPath}.${key}`, resource);
+                }
+            }  
         }
         return submitData;
     }
