@@ -787,7 +787,7 @@ export default class DhCharacter extends DhCreature {
         }
 
         // Clamp resources (must be done last to ensure all updates occur)
-        this.resources.clamp();
+        this.clampResources();
     }
 
     getRollData() {
