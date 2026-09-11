@@ -15,6 +15,7 @@
 import { getScrollTextData } from '../../helpers/utils.mjs';
 import { changeTypes } from './changeTypes/_module.mjs'
 import { conditionalTypes } from './conditionalTypes/_module.mjs';
+import { migrations } from './migrations/_module.mjs';
 
 export default class BaseEffect extends foundry.data.ActiveEffectTypeDataModel {
     static defineSchema() {
@@ -117,16 +118,29 @@ export default class BaseEffect extends foundry.data.ActiveEffectTypeDataModel {
         return true;
     }
 
-    testIsSuppressed(rollData) {
+    /** 
+     * Tests all conditionals of a specific phase and returns if there are no failures
+     * @param {object} rollData
+     * @param {object} [options]
+     * @param {keyof typeof CONFIG.DH.EFFECTS.conditionalPhases} [options.phase] the phase to run on, by default its preparation
+     * @param {(keyof typeof CONFIG.DH.EFFECTS.conditionalFailureModes) | null} [options.failureMode] the failure mode to check, by default its all
+     * @returns if the conditionals of the phase pass
+     */
+    testConditionals(rollData, { 
+        phase = CONFIG.DH.EFFECTS.conditionalPhases.preparation.id, 
+        failureMode = null
+    } = {}) {
         for (const change of this.changes) {
-            if (change.isSuppressed) return true;
+            if (change.isSuppressed) return false;
         }
 
-        return rollData && this.conditionals.some(x => 
-            x.constructor.metadata.phase === CONFIG.DH.EFFECTS.conditionalPhases.preparation.id && 
-            x.constructor.metadata.failureMode === CONFIG.DH.EFFECTS.conditionalFailureModes.suppress.id &&
+        const conditionalFailed = rollData && this.conditionals.some(x => 
+            x.constructor.metadata.phase === phase && 
+            (!failureMode || x.constructor.metadata.failureMode === failureMode) &&
             !x.test(rollData)
         );
+
+        return !rollData || !conditionalFailed; 
     }
 
     get armorChange() {
@@ -187,9 +201,9 @@ export default class BaseEffect extends foundry.data.ActiveEffectTypeDataModel {
     }
 
     static migrateData(source) {
-        if (source.rangeDependence?.enabled === false) {
-            source.rangeDependence = null;
-        }
+        for (const migration of migrations) {
+            migration(source);
+        } 
 
         return super.migrateData(source);
     }

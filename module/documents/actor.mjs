@@ -752,7 +752,15 @@ export default class DhpActor extends Actor {
                 ability: abilityLabel
             }),
             headerTitle: `${game.i18n.localize('DAGGERHEART.GENERAL.dualityRoll')}: ${this.name}`,
-            effects: await game.system.api.data.actions.actionsTypes.base.getActionRelevantEffects(this),
+            effects: await game.system.api.data.actions.actionsTypes.base.getActionRelevantEffects(
+                {
+                    action: {
+                        actionType: 'action', 
+                        roll: { type: 'trait' }
+                    }
+                }, 
+                this
+            ),
             roll: {
                 trait: trait,
                 type: 'trait'
@@ -1269,15 +1277,12 @@ export default class DhpActor extends Actor {
 
     /**@inheritdoc */
     *allApplicableEffects({ noSelfArmor, noTransferArmor } = {}) {
+        /** @param {DhActiveEffect} effect */
         const isRemovedByConditional = effect => {
             const { preparation } = CONFIG.DH.EFFECTS.conditionalPhases;
             const { hide } = CONFIG.DH.EFFECTS.conditionalFailureModes;
             const rollData = this.getRollData();
-            return effect.system.conditionals.some(x => 
-                x.constructor.metadata.phase === preparation.id && 
-                x.constructor.metadata.failureMode === hide.id &&
-                !x.test(rollData)
-            );
+            return !effect.system.testConditionals(rollData, { phase: preparation.id, failureMode: hide.id });
         }
 
         for (const effect of this.effects) {
