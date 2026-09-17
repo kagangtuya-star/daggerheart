@@ -50,6 +50,7 @@ export default class DHWeapon extends BaseDataItem {
                 })
             ),
             attack: new ActionField({
+                type: 'attack',
                 initial: {
                     name: 'Attack',
                     img: 'icons/skills/melee/blood-slash-foam-red.webp',
