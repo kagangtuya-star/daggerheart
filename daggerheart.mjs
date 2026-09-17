@@ -21,6 +21,7 @@ import { placeables, DhTokenLayer } from './module/canvas/_module.mjs';
 import './node_modules/@yaireo/tagify/dist/tagify.css';
 import TokenManager from './module/documents/tokenManager.mjs';
 import { pick } from './module/helpers/utils.mjs';
+import { dhTriggers, dhColorsets, getDiceRoles } from './module/config/dsnConfig.mjs';
 
 CONFIG.DH = SYSTEM;
 CONFIG.TextEditor.enrichers.push(...enricherConfig);
@@ -405,11 +406,22 @@ Hooks.on('ready', async () => {
         });
     }
 
-
     runMigrations();
 });
 
-Hooks.once('dicesoniceready', () => {});
+Hooks.once('diceSoNiceReady', dice3d => {
+    for (const trigger of dhTriggers) {
+        dice3d.addSFXTrigger(trigger.name, _loc(trigger.label), trigger.ids);
+    }
+
+    for (const colorset of dhColorsets) {
+        dice3d.addColorset(colorset);
+    }
+
+    for (const diceRole of getDiceRoles()) {
+        dice3d.addRole(diceRole, { package: CONFIG.DH.id });
+    }
+});
 
 Hooks.on('openDetachedWindow', (_, window) => {
     enricherRenderSetup(window.document);
