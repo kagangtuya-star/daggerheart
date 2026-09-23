@@ -1,5 +1,5 @@
 import { DHDamageData } from '../../data/fields/action/damageField.mjs';
-import { getAllResources, tagifyElement } from '../../helpers/utils.mjs';
+import { getAllResources, pickBy, tagifyElement } from '../../helpers/utils.mjs';
 import DaggerheartSheet from '../sheets/daggerheart-sheet.mjs';
 
 const { ApplicationV2 } = foundry.applications.api;
@@ -203,6 +203,12 @@ export default class DHActionBaseConfig extends DaggerheartSheet(ApplicationV2) 
                 ['']: { id: '', label: _loc('None') },
                 ...CONFIG.DH.ACTIONS.evolutionStates
             };
+        }
+
+        if (context.source.roll) {
+            context.rollTraits = pickBy(CONFIG.DH.ACTIONS.rollTypeTraits, value => 
+                !context.source.roll.type || !value.rollTypes || value.rollTypes.includes(context.source.roll.type)
+            );
         }
 
         context.openSection = this.openSection;
